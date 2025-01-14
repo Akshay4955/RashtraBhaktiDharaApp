@@ -14,6 +14,13 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-RashtraBhaktiDharaApp-RashtraBhaktiDharaAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-RashtraBhaktiDharaApp-RashtraBhaktiDharaAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		A63805B96714420E9113290B /* Mukta-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3791EA0F942345879E45B312 /* Mukta-Bold.ttf */; };
+		7734C03AE23145D0B524B297 /* Mukta-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D76E4EE001E480F83CBDE6F /* Mukta-ExtraBold.ttf */; };
+		83EEE2E142FD40B68BD20712 /* Mukta-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4F028BC2AED14A678DD7E693 /* Mukta-ExtraLight.ttf */; };
+		E24FDF6E8E59480DAA3E6921 /* Mukta-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6190CD4B973043AEBBA20191 /* Mukta-Light.ttf */; };
+		4D3635226C4140A0B2C0CC2D /* Mukta-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA371198EAB741D09F5FA099 /* Mukta-Medium.ttf */; };
+		8A203760127343AEA5FB683A /* Mukta-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12B172F76B824699A6542CC6 /* Mukta-Regular.ttf */; };
+		5A084B520668442192C99818 /* Mukta-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4480E8B191F54ED9BCC7D897 /* Mukta-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +52,13 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = RashtraBhaktiDharaApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-RashtraBhaktiDharaApp-RashtraBhaktiDharaAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RashtraBhaktiDharaApp-RashtraBhaktiDharaAppTests.release.xcconfig"; path = "Target Support Files/Pods-RashtraBhaktiDharaApp-RashtraBhaktiDharaAppTests/Pods-RashtraBhaktiDharaApp-RashtraBhaktiDharaAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		3791EA0F942345879E45B312 /* Mukta-Bold.ttf */ = {isa = PBXFileReference; name = "Mukta-Bold.ttf"; path = "../src/assets/fonts/Mukta-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4D76E4EE001E480F83CBDE6F /* Mukta-ExtraBold.ttf */ = {isa = PBXFileReference; name = "Mukta-ExtraBold.ttf"; path = "../src/assets/fonts/Mukta-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4F028BC2AED14A678DD7E693 /* Mukta-ExtraLight.ttf */ = {isa = PBXFileReference; name = "Mukta-ExtraLight.ttf"; path = "../src/assets/fonts/Mukta-ExtraLight.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6190CD4B973043AEBBA20191 /* Mukta-Light.ttf */ = {isa = PBXFileReference; name = "Mukta-Light.ttf"; path = "../src/assets/fonts/Mukta-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		CA371198EAB741D09F5FA099 /* Mukta-Medium.ttf */ = {isa = PBXFileReference; name = "Mukta-Medium.ttf"; path = "../src/assets/fonts/Mukta-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		12B172F76B824699A6542CC6 /* Mukta-Regular.ttf */ = {isa = PBXFileReference; name = "Mukta-Regular.ttf"; path = "../src/assets/fonts/Mukta-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4480E8B191F54ED9BCC7D897 /* Mukta-SemiBold.ttf */ = {isa = PBXFileReference; name = "Mukta-SemiBold.ttf"; path = "../src/assets/fonts/Mukta-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +138,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				C3DF63A83F7B48158789D904 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -149,6 +164,21 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		C3DF63A83F7B48158789D904 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				3791EA0F942345879E45B312 /* Mukta-Bold.ttf */,
+				4D76E4EE001E480F83CBDE6F /* Mukta-ExtraBold.ttf */,
+				4F028BC2AED14A678DD7E693 /* Mukta-ExtraLight.ttf */,
+				6190CD4B973043AEBBA20191 /* Mukta-Light.ttf */,
+				CA371198EAB741D09F5FA099 /* Mukta-Medium.ttf */,
+				12B172F76B824699A6542CC6 /* Mukta-Regular.ttf */,
+				4480E8B191F54ED9BCC7D897 /* Mukta-SemiBold.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -245,6 +275,13 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				A63805B96714420E9113290B /* Mukta-Bold.ttf in Resources */,
+				7734C03AE23145D0B524B297 /* Mukta-ExtraBold.ttf in Resources */,
+				83EEE2E142FD40B68BD20712 /* Mukta-ExtraLight.ttf in Resources */,
+				E24FDF6E8E59480DAA3E6921 /* Mukta-Light.ttf in Resources */,
+				4D3635226C4140A0B2C0CC2D /* Mukta-Medium.ttf in Resources */,
+				8A203760127343AEA5FB683A /* Mukta-Regular.ttf in Resources */,
+				5A084B520668442192C99818 /* Mukta-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

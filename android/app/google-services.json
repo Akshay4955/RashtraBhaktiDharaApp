@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "740037634358",
+    "firebase_url": "https://rashtrabhaktidharaapp-default-rtdb.firebaseio.com",
+    "project_id": "rashtrabhaktidharaapp",
+    "storage_bucket": "rashtrabhaktidharaapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:740037634358:android:d5b20e9fe28d90a5cbeb97",
+        "android_client_info": {
+          "package_name": "com.rashtrabhaktidharaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "740037634358-7go5k5auc96bkvftm9rijv6llnm3721g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rashtrabhaktidharaapp",
+            "certificate_hash": "c8de6c8965f5f505591ea60e53e87eec457d7542"
+          }
+        },
+        {
+          "client_id": "740037634358-m5cfdt4djsdlocn3c0iqfoccgbep1m78.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rashtrabhaktidharaapp",
+            "certificate_hash": "8bca6e16c28cf90d235eeef176f20c40ce4983c3"
+          }
+        },
+        {
+          "client_id": "740037634358-f86km3flq9oc00s6fg9jsncgdd619aem.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOIKFkL7O7wIWOB3c6_WhxXNttUz2Nyd8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "740037634358-f86km3flq9oc00s6fg9jsncgdd619aem.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
