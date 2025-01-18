@@ -32,7 +32,7 @@ const ShlokList = () => {
             colors={[colorThree, colorNine]}
             start={{x: 0, y: 0}}
             end={{x: 1, y: 0}}>
-            <Text style={styles.listText}>{item.title}</Text>
+            <Text style={styles.listText}>{item?.title}</Text>
             <Icon
               name={'chevron-forward'}
               size={moderateScale(26)}
@@ -43,12 +43,7 @@ const ShlokList = () => {
         {item?.audio ? (
           <TouchableOpacity
             style={styles.listViewAudio}
-            onPress={() => navigation.navigate('Audio', {url: item?.audio})}>
-            {/* <LinearGradient
-              style={styles.listViewAudio}
-              colors={[colorFive, colorTwelve]}
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}> */}
+            onPress={() => navigation.navigate('Audio', {url: item?.audio, title: item?.title})}>
             <View style={{flexDirection: 'row'}}>
               <Icon
                 name={'musical-notes'}
@@ -56,18 +51,17 @@ const ShlokList = () => {
                 color={textColor}
               />
               <Text style={styles.listText}>{item.title}</Text>
-              {/* <Icon
+              <Icon
                 name={'musical-notes'}
                 size={moderateScale(26)}
                 color={textColor}
-              /> */}
+              />
             </View>
             <Icon
               name={'chevron-forward'}
               size={moderateScale(26)}
               color={textColor}
             />
-            {/* </LinearGradient> */}
           </TouchableOpacity>
         ) : null}
       </>
@@ -77,7 +71,7 @@ const ShlokList = () => {
   return (
     <SafeAreaView style={styles.mainView}>
       <ListHeader header={Headers.Shlok} />
-      {data.length > 0 ? (
+      {data?.length > 0 ? (
         <FlatList
           data={data}
           keyExtractor={item => item?.title}
@@ -86,6 +80,9 @@ const ShlokList = () => {
           initialNumToRender={10}
           maxToRenderPerBatch={12}
           windowSize={10}
+          ListEmptyComponent={
+            <ActivityIndicator size={'large'} color={colorNine} />
+          }
         />
       ) : (
         <ActivityIndicator size={'large'} color={colorNine} />

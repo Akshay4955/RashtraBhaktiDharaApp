@@ -18,6 +18,7 @@ import {
   colorEleven,
   colorFifteen,
   colorNine,
+  colorThirteen,
   colorThree,
   colorTwelve,
   colorTwo,
@@ -29,9 +30,10 @@ import {
   verticalScale,
   windowWidth,
 } from '../../utils/constants/Metrics';
+import Logger from '../../utils/logUtility/Logger';
 
 const AudioPlayer = ({route}) => {
-  const {url} = route.params;
+  const {url, title} = route?.params;
   const navigation = useNavigation();
   const [isPlaying, setIsPlaying] = useState(false);
   const [audio, setAudio] = useState(null);
@@ -42,7 +44,7 @@ const AudioPlayer = ({route}) => {
   useEffect(() => {
     const sound = new Sound(url, null, error => {
       if (error) {
-        console.log('Failed to load the sound', error);
+        Logger.log('Failed to load the sound', error);
         return;
       }
       setDuration(sound.getDuration());
@@ -76,6 +78,16 @@ const AudioPlayer = ({route}) => {
     }
   };
 
+  const handleDownloadClick = () => {
+    if (audio && !isLoading) {
+      if (isPlaying) {
+        audio.pause();
+      }
+      setIsPlaying(false);
+    }
+    Linking.openURL(url);
+  };
+
   const onSlidingComplete = value => {
     if (audio && !isLoading) {
       audio.setCurrentTime(value);
@@ -88,9 +100,6 @@ const AudioPlayer = ({route}) => {
     if (newPosition < duration) {
       await audio.setCurrentTime(newPosition);
     }
-    //  else {
-    //   await audio.setCurrentTime(position);
-    // }
   };
 
   const backwardAudio = async () => {
@@ -110,17 +119,39 @@ const AudioPlayer = ({route}) => {
         color={textColor}
         onPress={() => navigation.goBack()}
       />
-      <Text style={styles.title}>Audio Player</Text>
-      <Image
-        source={images.audioBackground}
+      <Text style={styles.header}>संगीतबद्ध श्लोक</Text>
+      <Text style={styles.title}>{title}</Text>
+      {/* <AnimatedLottieView
         style={{
           height: verticalScale(300),
           width: windowWidth - horizontalScale(60),
           borderRadius: moderateScale(12),
           alignSelf: 'center',
         }}
+        source={images.audioPlaying}
+        autoPlay
+        loop
+      /> */}
+      <Image
+        source={isPlaying ? images.audioPlaying : images.audioBackground}
+        style={{
+          maxHeight: verticalScale(300),
+          maxWidth: windowWidth - horizontalScale(60),
+          borderRadius: moderateScale(12),
+          alignSelf: 'center',
+        }}
         resizeMode="stretch"
       />
+      {/* <FastImage
+        source={isPlaying ? images.audioPlaying : images.audioBackground}
+        style={{
+          height: verticalScale(300),
+          width: windowWidth - horizontalScale(60),
+          borderRadius: moderateScale(12),
+          alignSelf: 'center',
+        }}
+        resizeMode={FastImage.resizeMode.stretch}
+      /> */}
       {isLoading ? (
         <>
           <ActivityIndicator
@@ -135,7 +166,7 @@ const AudioPlayer = ({route}) => {
               textAlign: 'center',
               color: textColor,
             }}>
-            ऑडिओ लोड होत आहे...!!!
+            श्लोक लोड होत आहे...!!!
           </Text>
         </>
       ) : (
@@ -154,29 +185,29 @@ const AudioPlayer = ({route}) => {
             <Icon
               name={'play-back-circle-outline'}
               size={moderateScale(50)}
-              color={textColor}
+              color={colorNine}
               onPress={backwardAudio}
             />
             <Icon
               name={isPlaying ? 'pause-circle-outline' : 'play-circle-outline'}
               size={moderateScale(50)}
-              color={textColor}
+              color={colorNine}
               onPress={togglePlayPause}
             />
             <Icon
               name={'play-forward-circle-outline'}
               size={moderateScale(50)}
-              color={textColor}
+              color={colorNine}
               onPress={forwardAudio}
             />
           </View>
-          <TouchableOpacity onPress={() => Linking.openURL(url)}>
+          <TouchableOpacity onPress={handleDownloadClick}>
             <LinearGradient
               style={styles.listView}
               colors={[colorThree, colorNine]}
               start={{x: 0, y: 0}}
               end={{x: 1, y: 0}}>
-              <Text style={styles.listText}>ऑडिओ डाउनलोड करा</Text>
+              <Text style={styles.listText}>श्लोक डाउनलोड करा</Text>
               <Icon
                 name={'download-outline'}
                 size={moderateScale(26)}
@@ -196,13 +227,20 @@ const styles = StyleSheet.create({
     padding: moderateScale(12),
     backgroundColor: colorTwo,
   },
+  header: {
+    fontFamily: 'Mukta-Bold',
+    fontSize: moderateScale(30),
+    textAlign: 'center',
+    marginVertical: verticalScale(8),
+    color: colorFifteen,
+    elevation: 10,
+  },
   title: {
     fontFamily: 'Mukta-Bold',
-    fontSize: moderateScale(26),
+    fontSize: moderateScale(24),
     textAlign: 'center',
-    marginVertical: verticalScale(16),
-    color: textColor,
-    elevation: 10,
+    marginBottom: verticalScale(20),
+    color: colorThirteen,
   },
   slider: {
     height: verticalScale(60),

@@ -32,7 +32,7 @@ const PadyaList = () => {
   }, [searchQuery]);
 
   const scrollToMatchingIndex = () => {
-    const index = data.findIndex(item =>
+    const index = data?.findIndex(item =>
       item.title.toLowerCase().includes(searchQuery.toLowerCase()),
     );
     if (index !== -1 && flatListRef.current) {
@@ -70,7 +70,7 @@ const PadyaList = () => {
         value={searchQuery}
         onChangeText={text => setSearchQuery(text)}
       />
-      {data.length > 0 ? (
+      {data?.length > 0 ? (
         <FlatList
           ref={flatListRef}
           data={data}
@@ -81,6 +81,9 @@ const PadyaList = () => {
           maxToRenderPerBatch={12}
           windowSize={10}
           ListFooterComponent={<View style={styles.footer} />}
+          ListEmptyComponent={
+            <ActivityIndicator size={'large'} color={colorNine} />
+          }
         />
       ) : (
         <ActivityIndicator size={'large'} color={colorNine} />

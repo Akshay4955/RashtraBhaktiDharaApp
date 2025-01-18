@@ -7,10 +7,12 @@ import {
 import {
   backgroundColor,
   colorEleven,
+  colorFifteen,
   colorNine,
   colorOne,
   colorTen,
   colorThirteen,
+  colorTwo,
   textColor,
 } from '../../utils/constants/color';
 
@@ -58,18 +60,21 @@ export const MainPageCss = StyleSheet.create({
   header: {
     fontFamily: 'Mukta-Bold',
     alignSelf: 'center',
-    fontSize: moderateScale(20),
+    fontSize: moderateScale(22),
     color: colorEleven,
+    marginVertical: verticalScale(6),
   },
   subtitle: {
     fontFamily: 'Mukta-Bold',
-    fontSize: moderateScale(16),
+    fontSize: moderateScale(18),
     color: colorTen,
+    marginVertical: verticalScale(6),
   },
   info: {
     fontFamily: 'Mukta-Medium',
     fontSize: moderateScale(14),
     color: textColor,
+    marginVertical: verticalScale(6),
   },
   loader: {
     marginTop: verticalScale(140),
@@ -107,5 +112,15 @@ export const MainPageCss = StyleSheet.create({
     borderRadius: moderateScale(12),
     padding: moderateScale(6),
     backgroundColor: colorOne,
+  },
+  eventContainer: {
+    height: verticalScale(300),
+    backgroundColor: colorTwo,
+    padding: moderateScale(18),
+    margin: moderateScale(18),
+    borderRadius: moderateScale(10),
+    borderWidth: moderateScale(2),
+    borderColor: colorFifteen,
+    overflow: 'hidden',
   },
 });

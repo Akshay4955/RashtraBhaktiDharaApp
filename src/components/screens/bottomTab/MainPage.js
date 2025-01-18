@@ -1,7 +1,8 @@
-import {useIsFocused} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
   ActivityIndicator,
+  FlatList,
   Image,
   Modal,
   SafeAreaView,
@@ -36,6 +37,7 @@ configureReanimatedLogger({
 
 const MainPage = () => {
   const focused = useIsFocused();
+  const navigation = useNavigation();
   const {firebaseData} = useFirebaseData();
   const data = firebaseData?.MainPageData;
   const [selectedImage, setSelectedImage] = useState(null);
@@ -61,6 +63,18 @@ const MainPage = () => {
         />
       </View>
     </TouchableWithoutFeedback>
+  );
+
+  const renderItemEvent = ({item}) => (
+    <TouchableOpacity
+      activeOpacity={0.8}
+      onPress={() => navigation.navigate('Event', {item: item})}>
+      <View style={styles.eventContainer} key={item?.title}>
+        <Text style={styles.header}>{item?.title}</Text>
+        <Text style={styles.subtitle}>{item?.subtitle}</Text>
+        <Text style={styles.info}>{formatData(item?.information)}</Text>
+      </View>
+    </TouchableOpacity>
   );
   return (
     <SafeAreaView style={styles.mainView}>
@@ -98,13 +112,20 @@ const MainPage = () => {
               data={data}
               renderItem={renderItem}
             />
-            <View style={styles.infoView}>
-              <Text style={styles.header}>{data?.info?.title}</Text>
-              <Text style={styles.subtitle}>{data?.info?.subtitle}</Text>
-              <Text style={styles.info}>
-                {formatData(data?.info?.information)}
-              </Text>
-            </View>
+            {data?.event ? (
+              <FlatList
+                data={data?.event}
+                keyExtractor={item => item?.title}
+                renderItem={renderItemEvent}
+                showsVerticalScrollIndicator={false}
+                initialNumToRender={2}
+                maxToRenderPerBatch={2}
+                windowSize={2}
+                ListEmptyComponent={
+                  <ActivityIndicator style={styles.loader} size={'large'} />
+                }
+              />
+            ) : null}
           </>
         ) : (
           <ActivityIndicator style={styles.loader} size={'large'} />

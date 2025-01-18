@@ -5,7 +5,12 @@ import {
   verticalScale,
   windowWidth,
 } from '../../utils/constants/Metrics';
-import {colorOne, textColor} from '../../utils/constants/color';
+import {
+  colorFourteen,
+  colorOne,
+  colorTwelve,
+  textColor,
+} from '../../utils/constants/color';
 
 export const PoemCss = StyleSheet.create({
   mainView: {
@@ -62,4 +67,22 @@ export const PoemCss = StyleSheet.create({
     alignItems: 'center',
   },
   searchText: {color: colorOne, fontFamily: 'Mukta-Regular'},
+  eventTitle: {
+    fontFamily: 'Mukta-Bold',
+    fontSize: moderateScale(22),
+    color: colorFourteen,
+    textAlign: 'center',
+  },
+  eventSubTitle: {
+    fontFamily: 'Mukta-Bold',
+    fontSize: moderateScale(20),
+    color: colorTwelve,
+    textAlign: 'center',
+  },
+  eventData: {
+    fontFamily: 'Mukta-Bold',
+    fontSize: moderateScale(16),
+    color: textColor,
+    textAlign: 'center',
+  },
 });

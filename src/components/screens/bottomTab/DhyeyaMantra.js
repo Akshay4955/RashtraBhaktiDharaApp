@@ -28,8 +28,13 @@ const DhyeyaMantra = () => {
         <View style={styles.contentView}>
           <Text style={styles.contentText}>{formattedData}</Text>
           <CustomButton
-            onPress={() => navigation.navigate('Audio', {url: URL})}
-            title={'ऑडिओ प्ले करा'}
+            onPress={() =>
+              navigation.navigate('Audio', {
+                url: URL,
+                title: Headers.DhyeyaMantra,
+              })
+            }
+            title={'संगीतबद्ध श्लोक ऐका'}
           />
         </View>
       ) : (
