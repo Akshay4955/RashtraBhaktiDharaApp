@@ -11,11 +11,9 @@
 -keep class com.google.android.gms.** { *; }
 -keep class com.google.api.client.** { *; }
 -keep class com.google.firebase.** { *; }
--keep public class com.dylanvann.fastimage.* {*;}
--keep public class com.dylanvann.fastimage.** {*;}
--keep public class * implements com.bumptech.glide.module.GlideModule
--keep public class * extends com.bumptech.glide.module.AppGlideModule
--keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
-  **[] $VALUES;
-  public *;
-}
+# Keep React Native classes
+-keep class com.facebook.react.** { *; }
+# Keep all native modules
+-keep class com.facebook.react.bridge.** { *; }
+-keep class com.facebook.fresco.** { *; }
+-keep class com.facebook.imagepipeline.** { *; }
