@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
+import {BannerAd, BannerAdSize, TestIds} from 'react-native-google-mobile-ads';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {PoemCss as styles} from '../../styles/screens/PoemCss';
@@ -19,6 +20,9 @@ import {
 } from '../../utils/constants/color';
 import PoemHeader from './PoemHeader';
 
+const adUnitId = __DEV__
+  ? TestIds.ADAPTIVE_BANNER
+  : 'ca-app-pub-2249316745492384~3871687625';
 const Poem = ({route}) => {
   const {poem} = route?.params;
   const data = formatData(poem?.content);
@@ -43,6 +47,10 @@ const Poem = ({route}) => {
           <ActivityIndicator size={'large'} color={colorOne} />
         )}
       </ScrollView>
+      <BannerAd
+        unitId={adUnitId}
+        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+      />
     </LinearGradient>
   );
 };

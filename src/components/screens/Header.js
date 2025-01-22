@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: moderateScale(20),
-    marginVertical: verticalScale(20),
+    marginVertical: verticalScale(8),
     borderWidth: moderateScale(1),
     borderColor: colorTwo,
     elevation: 5

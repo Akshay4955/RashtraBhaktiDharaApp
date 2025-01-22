@@ -2,7 +2,6 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import {useNavigation} from '@react-navigation/native';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
-  Alert,
   FlatList,
   Text,
   TextInput,
@@ -11,6 +10,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import {BannerAd, BannerAdSize, TestIds} from 'react-native-google-mobile-ads';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {PoemCss as styles} from '../../styles/screens/PoemCss';
@@ -25,6 +25,9 @@ import {
 import Logger from '../../utils/logUtility/Logger';
 import PoemHeader from './PoemHeader';
 
+const adUnitId = __DEV__
+  ? TestIds.ADAPTIVE_BANNER
+  : 'ca-app-pub-2249316745492384~3871687625';
 const Shlok = ({route}) => {
   const {poem} = route?.params;
   const navigation = useNavigation();
@@ -202,6 +205,10 @@ const Shlok = ({route}) => {
           offset: verticalScale(160) * index,
           index,
         })}
+      />
+      <BannerAd
+        unitId={adUnitId}
+        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
       />
       {showCopyButton ? (
         <TouchableOpacity

@@ -1,4 +1,7 @@
 {
   "name": "RashtraBhaktiDharaApp",
-  "displayName": "RashtraBhaktiDharaApp"
+  "displayName": "RashtraBhaktiDharaApp",
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-2249316745492384~3871687625"
+  }
 }

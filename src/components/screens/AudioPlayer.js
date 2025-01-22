@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import {BannerAd, BannerAdSize, TestIds} from 'react-native-google-mobile-ads';
 import LinearGradient from 'react-native-linear-gradient';
 import Sound from 'react-native-sound';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -32,6 +33,9 @@ import {
 } from '../../utils/constants/Metrics';
 import Logger from '../../utils/logUtility/Logger';
 
+const adUnitId = __DEV__
+  ? TestIds.ADAPTIVE_BANNER
+  : 'ca-app-pub-2249316745492384~3871687625';
 const AudioPlayer = ({route}) => {
   const {url, title} = route?.params;
   const navigation = useNavigation();
@@ -112,16 +116,17 @@ const AudioPlayer = ({route}) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Icon
-        name={'arrow-back'}
-        size={moderateScale(34)}
-        color={textColor}
-        onPress={() => navigation.goBack()}
-      />
-      <Text style={styles.header}>संगीतबद्ध श्लोक</Text>
-      <Text style={styles.title}>{title}</Text>
-      {/* <AnimatedLottieView
+    <>
+      <View style={styles.container}>
+        <Icon
+          name={'arrow-back'}
+          size={moderateScale(34)}
+          color={textColor}
+          onPress={() => navigation.goBack()}
+        />
+        <Text style={styles.header}>संगीतबद्ध श्लोक</Text>
+        <Text style={styles.title}>{title}</Text>
+        {/* <AnimatedLottieView
         style={{
           height: verticalScale(300),
           width: windowWidth - horizontalScale(60),
@@ -132,17 +137,17 @@ const AudioPlayer = ({route}) => {
         autoPlay
         loop
       /> */}
-      <Image
-        source={isPlaying ? images.audioPlaying : images.audioBackground}
-        style={{
-          maxHeight: verticalScale(300),
-          maxWidth: windowWidth - horizontalScale(60),
-          borderRadius: moderateScale(12),
-          alignSelf: 'center',
-        }}
-        resizeMode="stretch"
-      />
-      {/* <FastImage
+        <Image
+          source={isPlaying ? images.audioPlaying : images.audioBackground}
+          style={{
+            maxHeight: verticalScale(300),
+            maxWidth: windowWidth - horizontalScale(60),
+            borderRadius: moderateScale(12),
+            alignSelf: 'center',
+          }}
+          resizeMode="stretch"
+        />
+        {/* <FastImage
         source={isPlaying ? images.audioPlaying : images.audioBackground}
         style={{
           height: verticalScale(300),
@@ -152,72 +157,79 @@ const AudioPlayer = ({route}) => {
         }}
         resizeMode={FastImage.resizeMode.stretch}
       /> */}
-      {isLoading ? (
-        <>
-          <ActivityIndicator
-            size={moderateScale(60)}
-            color={colorTwelve}
-            style={{marginVertical: verticalScale(50)}}
-          />
-          <Text
-            style={{
-              fontFamily: 'Mukta-Bold',
-              fontSize: moderateScale(20),
-              textAlign: 'center',
-              color: textColor,
-            }}>
-            श्लोक लोड होत आहे...!!!
-          </Text>
-        </>
-      ) : (
-        <>
-          <Slider
-            style={styles.slider}
-            minimumValue={0}
-            maximumValue={duration}
-            value={position}
-            minimumTrackTintColor={colorFifteen}
-            maximumTrackTintColor={colorEleven}
-            thumbTintColor={colorFifteen}
-            onSlidingComplete={onSlidingComplete}
-          />
-          <View style={styles.controls}>
-            <Icon
-              name={'play-back-circle-outline'}
-              size={moderateScale(50)}
-              color={colorNine}
-              onPress={backwardAudio}
+        {isLoading ? (
+          <>
+            <ActivityIndicator
+              size={moderateScale(60)}
+              color={colorTwelve}
+              style={{marginVertical: verticalScale(50)}}
             />
-            <Icon
-              name={isPlaying ? 'pause-circle-outline' : 'play-circle-outline'}
-              size={moderateScale(50)}
-              color={colorNine}
-              onPress={togglePlayPause}
+            <Text
+              style={{
+                fontFamily: 'Mukta-Bold',
+                fontSize: moderateScale(20),
+                textAlign: 'center',
+                color: textColor,
+              }}>
+              श्लोक लोड होत आहे...!!!
+            </Text>
+          </>
+        ) : (
+          <>
+            <Slider
+              style={styles.slider}
+              minimumValue={0}
+              maximumValue={duration}
+              value={position}
+              minimumTrackTintColor={colorFifteen}
+              maximumTrackTintColor={colorEleven}
+              thumbTintColor={colorFifteen}
+              onSlidingComplete={onSlidingComplete}
             />
-            <Icon
-              name={'play-forward-circle-outline'}
-              size={moderateScale(50)}
-              color={colorNine}
-              onPress={forwardAudio}
-            />
-          </View>
-          <TouchableOpacity onPress={handleDownloadClick}>
-            <LinearGradient
-              style={styles.listView}
-              colors={[colorThree, colorNine]}
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}>
-              <Text style={styles.listText}>श्लोक डाउनलोड करा</Text>
+            <View style={styles.controls}>
               <Icon
-                name={'download-outline'}
-                size={moderateScale(26)}
-                color={textColor}
+                name={'play-back-circle-outline'}
+                size={moderateScale(50)}
+                color={colorNine}
+                onPress={backwardAudio}
               />
-            </LinearGradient>
-          </TouchableOpacity>
-        </>
-      )}
-    </View>
+              <Icon
+                name={
+                  isPlaying ? 'pause-circle-outline' : 'play-circle-outline'
+                }
+                size={moderateScale(50)}
+                color={colorNine}
+                onPress={togglePlayPause}
+              />
+              <Icon
+                name={'play-forward-circle-outline'}
+                size={moderateScale(50)}
+                color={colorNine}
+                onPress={forwardAudio}
+              />
+            </View>
+            <TouchableOpacity onPress={handleDownloadClick}>
+              <LinearGradient
+                style={styles.listView}
+                colors={[colorThree, colorNine]}
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 0}}>
+                <Text style={styles.listText}>श्लोक डाउनलोड करा</Text>
+                <Icon
+                  name={'download-outline'}
+                  size={moderateScale(26)}
+                  color={textColor}
+                />
+              </LinearGradient>
+            </TouchableOpacity>
+          </>
+        )}
+      </View>
+      <BannerAd
+        unitId={adUnitId}
+        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+      />
+    </>
   );
 };
 
@@ -259,7 +271,7 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(28),
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: verticalScale(28),
+    marginVertical: verticalScale(20),
   },
   listText: {
     fontFamily: 'Mukta-Bold',
