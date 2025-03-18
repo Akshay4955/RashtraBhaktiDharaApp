@@ -27,7 +27,7 @@ import PoemHeader from './PoemHeader';
 
 const adUnitId = __DEV__
   ? TestIds.ADAPTIVE_BANNER
-  : 'ca-app-pub-2249316745492384~3871687625';
+  : 'ca-app-pub-2249316745492384/6186159072';
 const Shlok = ({route}) => {
   const {poem} = route?.params;
   const navigation = useNavigation();
@@ -206,10 +206,10 @@ const Shlok = ({route}) => {
           index,
         })}
       />
-      <BannerAd
+      {/* <BannerAd
         unitId={adUnitId}
         size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-      />
+      /> */}
       {showCopyButton ? (
         <TouchableOpacity
           style={[

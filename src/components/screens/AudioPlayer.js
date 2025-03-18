@@ -35,9 +35,10 @@ import Logger from '../../utils/logUtility/Logger';
 
 const adUnitId = __DEV__
   ? TestIds.ADAPTIVE_BANNER
-  : 'ca-app-pub-2249316745492384~3871687625';
+  : 'ca-app-pub-2249316745492384/6186159072';
 const AudioPlayer = ({route}) => {
   const {url, title} = route?.params;
+  const downloadURL = url.replace('export=view', 'export=download');
   const navigation = useNavigation();
   const [isPlaying, setIsPlaying] = useState(false);
   const [audio, setAudio] = useState(null);
@@ -89,7 +90,7 @@ const AudioPlayer = ({route}) => {
       }
       setIsPlaying(false);
     }
-    Linking.openURL(url);
+    Linking.openURL(`googlechrome://navigate?url=${downloadURL}`);
   };
 
   const onSlidingComplete = value => {
@@ -225,10 +226,10 @@ const AudioPlayer = ({route}) => {
           </>
         )}
       </View>
-      <BannerAd
+      {/* <BannerAd
         unitId={adUnitId}
         size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-      />
+      /> */}
     </>
   );
 };

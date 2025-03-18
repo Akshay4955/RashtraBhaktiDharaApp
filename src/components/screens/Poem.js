@@ -22,7 +22,7 @@ import PoemHeader from './PoemHeader';
 
 const adUnitId = __DEV__
   ? TestIds.ADAPTIVE_BANNER
-  : 'ca-app-pub-2249316745492384~3871687625';
+  : 'ca-app-pub-2249316745492384/6186159072';
 const Poem = ({route}) => {
   const {poem} = route?.params;
   const data = formatData(poem?.content);
@@ -47,10 +47,10 @@ const Poem = ({route}) => {
           <ActivityIndicator size={'large'} color={colorOne} />
         )}
       </ScrollView>
-      <BannerAd
+      {/* <BannerAd
         unitId={adUnitId}
         size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-      />
+      /> */}
     </LinearGradient>
   );
 };

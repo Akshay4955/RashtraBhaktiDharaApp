@@ -13,16 +13,19 @@ import Header from '../Header';
 
 const adUnitId = __DEV__
   ? TestIds.ADAPTIVE_BANNER
-  : 'ca-app-pub-2249316745492384~3871687625';
+  : 'ca-app-pub-2249316745492384/6186159072';
 const DhyeyaMantra = () => {
   const {firebaseData} = useFirebaseData();
   const data = firebaseData?.DhyeyaMantra;
   const formattedData = formatData(data);
   const navigation = useNavigation();
-  const URL =
-    'https://firebasestorage.googleapis.com/v0/b/rashtrabhaktidharaapp.appspot.com/o/DhyeyaMantra.mpeg?alt=media&token=38540484-8399-4c3d-8608-4d55d83c49a0';
+  const URL = firebaseData?.DhyeyaMantraAudio;
   return (
     <SafeAreaView style={{flex: 1}}>
+      {/* <BannerAd
+        unitId={adUnitId}
+        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+      /> */}
       <LinearGradient
         style={styles.mainView}
         colors={[colorThree, colorTen]}
@@ -48,10 +51,6 @@ const DhyeyaMantra = () => {
           <ActivityIndicator size={'large'} color={colorOne} />
         )}
       </LinearGradient>
-      <BannerAd
-        unitId={adUnitId}
-        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-      />
     </SafeAreaView>
   );
 };
