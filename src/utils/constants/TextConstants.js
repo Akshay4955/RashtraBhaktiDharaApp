@@ -19,4 +19,5 @@ export const ScreenNames = {
   PreranaMantra: 'प्रेरणा मंत्र',
   DhyeyaMantra: 'ध्येय मंत्र',
   BhushanChhand: 'कवी भूषण छंद',
+  MoreTab: 'अधिक माहिती',
 };

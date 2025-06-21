@@ -49,12 +49,20 @@ const PadyaList = () => {
           colors={[colorThree, colorNine]}
           start={{x: 0, y: 0}}
           end={{x: 1, y: 0}}>
-          <Text style={styles.listText}>{item.title}</Text>
-          <Icon
-            name={'chevron-forward'}
-            size={moderateScale(26)}
-            color={textColor}
-          />
+          <Text style={styles.listText}>{item?.title}</Text>
+          {item?.audio ? (
+            <Icon
+              name={'play-circle-sharp'}
+              size={moderateScale(36)}
+              color={textColor}
+              onPress={() =>
+                navigation.navigate('Audio', {
+                  url: item?.audio,
+                  title: item?.title,
+                })
+              }
+            />
+          ) : null}
         </LinearGradient>
       </TouchableOpacity>
     );

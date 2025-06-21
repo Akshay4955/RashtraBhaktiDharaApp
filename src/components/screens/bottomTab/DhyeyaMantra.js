@@ -1,19 +1,17 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {ActivityIndicator, SafeAreaView, ScrollView, Text} from 'react-native';
-import {BannerAd, BannerAdSize, TestIds} from 'react-native-google-mobile-ads';
+import {ActivityIndicator, SafeAreaView, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {useFirebaseData} from '../../../navigation/FirebaseProvider';
 import {HomeCss as styles} from '../../../styles/screens/HomeCss';
 import {formatData} from '../../../utils/commonUtils';
 import {colorOne, colorTen, colorThree} from '../../../utils/constants/color';
+import {verticalScale} from '../../../utils/constants/Metrics';
 import {Headers} from '../../../utils/constants/TextConstants';
+import CustomBannerAd from '../../common/CustomBannerAd';
 import CustomButton from '../../CustomButton';
 import Header from '../Header';
 
-const adUnitId = __DEV__
-  ? TestIds.ADAPTIVE_BANNER
-  : 'ca-app-pub-2249316745492384/6186159072';
 const DhyeyaMantra = () => {
   const {firebaseData} = useFirebaseData();
   const data = firebaseData?.DhyeyaMantra;
@@ -22,10 +20,7 @@ const DhyeyaMantra = () => {
   const URL = firebaseData?.DhyeyaMantraAudio;
   return (
     <SafeAreaView style={{flex: 1}}>
-      {/* <BannerAd
-        unitId={adUnitId}
-        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-      /> */}
+      <CustomBannerAd />
       <LinearGradient
         style={styles.mainView}
         colors={[colorThree, colorTen]}
@@ -33,9 +28,14 @@ const DhyeyaMantra = () => {
         end={{x: 1, y: 0}}>
         <Header header={Headers.DhyeyaMantra} />
         {data ? (
-          <ScrollView
-            style={styles.contentView}
-            showsVerticalScrollIndicator={false}>
+          <View
+            style={[
+              styles.contentView,
+              {
+                justifyContent: 'space-between',
+                paddingBottom: verticalScale(18),
+              },
+            ]}>
             <Text style={styles.contentText}>{formattedData}</Text>
             <CustomButton
               onPress={() =>
@@ -46,7 +46,7 @@ const DhyeyaMantra = () => {
               }
               title={'संगीतबद्ध श्लोक ऐका'}
             />
-          </ScrollView>
+          </View>
         ) : (
           <ActivityIndicator size={'large'} color={colorOne} />
         )}

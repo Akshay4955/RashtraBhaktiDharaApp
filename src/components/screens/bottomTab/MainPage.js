@@ -1,5 +1,5 @@
 import {useIsFocused, useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -18,6 +18,10 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import images from '../../../assets/images';
 import {useFirebaseData} from '../../../navigation/FirebaseProvider';
+import {
+  requestNotificationPermission,
+  setupTrackPlayer,
+} from '../../../services/audioPlayerService';
 import {MainPageCss as styles} from '../../../styles/screens/MainPageCss';
 import {formatData} from '../../../utils/commonUtils';
 import {moderateScale} from '../../../utils/constants/Metrics';
@@ -41,6 +45,14 @@ const MainPage = () => {
   const data = firebaseData?.MainPageData;
   const [selectedImage, setSelectedImage] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  useEffect(() => {
+    const init = async () => {
+      await requestNotificationPermission();
+      await setupTrackPlayer();
+    };
+    init();
+  }, []);
 
   const openFullScreen = item => {
     setSelectedImage(item);

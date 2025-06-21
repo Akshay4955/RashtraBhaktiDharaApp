@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: moderateScale(20),
-    marginVertical: verticalScale(20),
-    marginHorizontal: horizontalScale(40),
+    marginVertical: verticalScale(10),
+    marginHorizontal: horizontalScale(28),
     elevation: moderateScale(12),
     borderColor: colorTwelve,
     borderWidth: moderateScale(2),
@@ -41,8 +41,6 @@ const styles = StyleSheet.create({
   headerText: {
     fontFamily: 'Mukta-Bold',
     fontSize: moderateScale(28),
-    paddingHorizontal: horizontalScale(50),
-    marginVertical: verticalScale(4),
     color: textColor,
   },
 });

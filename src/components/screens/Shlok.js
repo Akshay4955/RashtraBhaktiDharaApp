@@ -10,7 +10,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {BannerAd, BannerAdSize, TestIds} from 'react-native-google-mobile-ads';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {PoemCss as styles} from '../../styles/screens/PoemCss';
@@ -23,11 +22,9 @@ import {
   textColor,
 } from '../../utils/constants/color';
 import Logger from '../../utils/logUtility/Logger';
+import CustomBannerAd from '../common/CustomBannerAd';
 import PoemHeader from './PoemHeader';
 
-const adUnitId = __DEV__
-  ? TestIds.ADAPTIVE_BANNER
-  : 'ca-app-pub-2249316745492384/6186159072';
 const Shlok = ({route}) => {
   const {poem} = route?.params;
   const navigation = useNavigation();
@@ -206,10 +203,7 @@ const Shlok = ({route}) => {
           index,
         })}
       />
-      {/* <BannerAd
-        unitId={adUnitId}
-        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-      /> */}
+      <CustomBannerAd />
       {showCopyButton ? (
         <TouchableOpacity
           style={[

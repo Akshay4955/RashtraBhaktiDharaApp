@@ -1,7 +1,6 @@
 import React from 'react';
 import {Button, Image, Text, View} from 'react-native';
 import {useAuth} from '../../../navigation/AuthenticationProvider';
-import {HomeCss as styles} from '../../../styles/screens/HomeCss';
 import {ProfileCss} from '../../../styles/screens/ProfileCss';
 import Logger from '../../../utils/logUtility/Logger';
 import Header from '../Header';
@@ -16,7 +15,7 @@ const Profile = () => {
     }
   };
   return (
-    <View style={styles.mainView}>
+    <View style={ProfileCss.mainView}>
       <Header header={'प्रोफाइल'} />
       <Image
         style={ProfileCss.image}

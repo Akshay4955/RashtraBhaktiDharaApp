@@ -10,11 +10,9 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import Icon from 'react-native-vector-icons/Ionicons';
 import {useFirebaseData} from '../../navigation/FirebaseProvider';
 import {ListCss as styles} from '../../styles/screens/ListCss';
 import {colorNine, colorThree, textColor} from '../../utils/constants/color';
-import {moderateScale} from '../../utils/constants/Metrics';
 import {Headers} from '../../utils/constants/TextConstants';
 import ListHeader from '../common/ListHeader';
 
@@ -49,12 +47,7 @@ const ChhandList = () => {
           colors={[colorThree, colorNine]}
           start={{x: 0, y: 0}}
           end={{x: 1, y: 0}}>
-          <Text style={styles.listText}>{item.title}</Text>
-          <Icon
-            name={'chevron-forward'}
-            size={moderateScale(26)}
-            color={textColor}
-          />
+          <Text style={styles.listText}>{item?.title}</Text>
         </LinearGradient>
       </TouchableOpacity>
     );

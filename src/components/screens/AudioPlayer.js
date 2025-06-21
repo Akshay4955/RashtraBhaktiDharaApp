@@ -2,7 +2,6 @@ import Slider from '@react-native-community/slider';
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {
-  ActivityIndicator,
   Image,
   Linking,
   StyleSheet,
@@ -10,18 +9,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {BannerAd, BannerAdSize, TestIds} from 'react-native-google-mobile-ads';
+import {TestIds} from 'react-native-google-mobile-ads';
 import LinearGradient from 'react-native-linear-gradient';
-import Sound from 'react-native-sound';
+import TrackPlayer, {
+  usePlaybackState,
+  useProgress,
+} from 'react-native-track-player';
 import Icon from 'react-native-vector-icons/Ionicons';
 import images from '../../assets/images';
 import {
   colorEleven,
   colorFifteen,
   colorNine,
-  colorThirteen,
   colorThree,
-  colorTwelve,
   colorTwo,
   textColor,
 } from '../../utils/constants/color';
@@ -31,94 +31,79 @@ import {
   verticalScale,
   windowWidth,
 } from '../../utils/constants/Metrics';
-import Logger from '../../utils/logUtility/Logger';
 
 const adUnitId = __DEV__
   ? TestIds.ADAPTIVE_BANNER
   : 'ca-app-pub-2249316745492384/6186159072';
+
 const AudioPlayer = ({route}) => {
   const {url, title} = route?.params;
-  const downloadURL = url.replace('export=view', 'export=download');
+  const playbackState = usePlaybackState();
+  const {position, duration} = useProgress();
   const navigation = useNavigation();
   const [isPlaying, setIsPlaying] = useState(false);
-  const [audio, setAudio] = useState(null);
-  const [duration, setDuration] = useState(0);
-  const [position, setPosition] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const sound = new Sound(url, null, error => {
-      if (error) {
-        Logger.log('Failed to load the sound', error);
-        return;
-      }
-      setDuration(sound.getDuration());
-      setIsLoading(false);
-    });
-
-    const interval = setInterval(() => {
-      if (sound.isLoaded()) {
-        sound.getCurrentTime(seconds => {
-          setPosition(seconds);
-        });
-      }
-    }, 100);
-
-    setAudio(sound);
-
+    setupAudio();
     return () => {
-      clearInterval(interval);
-      sound.release();
+      TrackPlayer.stop();
+      TrackPlayer.reset();
     };
   }, [url]);
 
-  const togglePlayPause = () => {
-    if (audio && !isLoading) {
-      if (isPlaying) {
-        audio.pause();
-      } else {
-        audio.play();
-      }
-      setIsPlaying(prevState => !prevState);
-    }
+  const setupAudio = async () => {
+    await TrackPlayer.reset();
+    await TrackPlayer.add({
+      id: '1',
+      url: url,
+      title: title,
+      artist: 'Unknown',
+    });
   };
 
-  const handleDownloadClick = () => {
-    if (audio && !isLoading) {
-      if (isPlaying) {
-        audio.pause();
-      }
+  const getDownloadURL = () =>
+    url?.replace('export=view', 'export=download') || null;
+
+  const togglePlayPause = async () => {
+    if (playbackState.state === 'playing') {
+      await TrackPlayer.pause();
       setIsPlaying(false);
+    } else {
+      await TrackPlayer.play();
+      setIsPlaying(true);
     }
-    Linking.openURL(`googlechrome://navigate?url=${downloadURL}`);
   };
 
-  const onSlidingComplete = value => {
-    if (audio && !isLoading) {
-      audio.setCurrentTime(value);
-      setPosition(value);
+  const seekAudio = async value => {
+    await TrackPlayer.seekTo(value);
+  };
+
+  const handleDownloadClick = async () => {
+    if (isPlaying) {
+      await TrackPlayer.pause();
+    }
+    setIsPlaying(false);
+    const downloadURL = getDownloadURL();
+    if (typeof downloadURL === 'string' && downloadURL.trim() !== '') {
+      Linking.openURL(`googlechrome://navigate?url=${downloadURL}`);
     }
   };
 
   const forwardAudio = async () => {
     const newPosition = position + 10;
     if (newPosition < duration) {
-      await audio.setCurrentTime(newPosition);
+      await TrackPlayer.seekTo(newPosition);
     }
   };
 
   const backwardAudio = async () => {
     const newPosition = position - 10;
-    if (newPosition > 0) {
-      await audio.setCurrentTime(newPosition);
-    } else {
-      await audio.setCurrentTime(0);
-    }
+    await TrackPlayer.seekTo(newPosition > 0 ? newPosition : 0);
   };
 
   return (
-    <>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <View style={styles.headerView}>
         <Icon
           name={'arrow-back'}
           size={moderateScale(34)}
@@ -126,153 +111,111 @@ const AudioPlayer = ({route}) => {
           onPress={() => navigation.goBack()}
         />
         <Text style={styles.header}>संगीतबद्ध श्लोक</Text>
-        <Text style={styles.title}>{title}</Text>
-        {/* <AnimatedLottieView
-        style={{
-          height: verticalScale(300),
-          width: windowWidth - horizontalScale(60),
-          borderRadius: moderateScale(12),
-          alignSelf: 'center',
-        }}
-        source={images.audioPlaying}
-        autoPlay
-        loop
-      /> */}
-        <Image
-          source={isPlaying ? images.audioPlaying : images.audioBackground}
-          style={{
-            maxHeight: verticalScale(300),
-            maxWidth: windowWidth - horizontalScale(60),
-            borderRadius: moderateScale(12),
-            alignSelf: 'center',
-          }}
-          resizeMode="stretch"
-        />
-        {/* <FastImage
-        source={isPlaying ? images.audioPlaying : images.audioBackground}
-        style={{
-          height: verticalScale(300),
-          width: windowWidth - horizontalScale(60),
-          borderRadius: moderateScale(12),
-          alignSelf: 'center',
-        }}
-        resizeMode={FastImage.resizeMode.stretch}
-      /> */}
-        {isLoading ? (
-          <>
-            <ActivityIndicator
-              size={moderateScale(60)}
-              color={colorTwelve}
-              style={{marginVertical: verticalScale(50)}}
-            />
-            <Text
-              style={{
-                fontFamily: 'Mukta-Bold',
-                fontSize: moderateScale(20),
-                textAlign: 'center',
-                color: textColor,
-              }}>
-              श्लोक लोड होत आहे...!!!
-            </Text>
-          </>
-        ) : (
-          <>
-            <Slider
-              style={styles.slider}
-              minimumValue={0}
-              maximumValue={duration}
-              value={position}
-              minimumTrackTintColor={colorFifteen}
-              maximumTrackTintColor={colorEleven}
-              thumbTintColor={colorFifteen}
-              onSlidingComplete={onSlidingComplete}
-            />
-            <View style={styles.controls}>
-              <Icon
-                name={'play-back-circle-outline'}
-                size={moderateScale(50)}
-                color={colorNine}
-                onPress={backwardAudio}
-              />
-              <Icon
-                name={
-                  isPlaying ? 'pause-circle-outline' : 'play-circle-outline'
-                }
-                size={moderateScale(50)}
-                color={colorNine}
-                onPress={togglePlayPause}
-              />
-              <Icon
-                name={'play-forward-circle-outline'}
-                size={moderateScale(50)}
-                color={colorNine}
-                onPress={forwardAudio}
-              />
-            </View>
-            <TouchableOpacity onPress={handleDownloadClick}>
-              <LinearGradient
-                style={styles.listView}
-                colors={[colorThree, colorNine]}
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}>
-                <Text style={styles.listText}>श्लोक डाउनलोड करा</Text>
-                <Icon
-                  name={'download-outline'}
-                  size={moderateScale(26)}
-                  color={textColor}
-                />
-              </LinearGradient>
-            </TouchableOpacity>
-          </>
-        )}
       </View>
-      {/* <BannerAd
-        unitId={adUnitId}
-        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-      /> */}
-    </>
+      <Text style={styles.title}>{title}</Text>
+      <Image
+        source={images.audioBackground}
+        style={styles.imageBackground}
+        resizeMode="stretch"
+      />
+      <Slider
+        style={styles.slider}
+        minimumValue={0}
+        maximumValue={duration}
+        value={position}
+        onSlidingComplete={seekAudio}
+        minimumTrackTintColor="orange"
+        maximumTrackTintColor="gray"
+        thumbTintColor="orange"
+      />
+
+      <View style={styles.controls}>
+        <Icon
+          name="play-back-circle-outline"
+          size={50}
+          color="black"
+          onPress={backwardAudio}
+        />
+        <Icon
+          name={isPlaying ? 'pause-circle-outline' : 'play-circle-outline'}
+          size={50}
+          color="black"
+          onPress={togglePlayPause}
+        />
+        <Icon
+          name="play-forward-circle-outline"
+          size={50}
+          color="black"
+          onPress={forwardAudio}
+        />
+      </View>
+      <TouchableOpacity onPress={handleDownloadClick}>
+        <LinearGradient
+          style={styles.listView}
+          colors={[colorThree, colorNine]}
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 0}}>
+          <Text style={styles.listText}>श्लोक डाउनलोड करा</Text>
+          <Icon
+            name={'download-outline'}
+            size={moderateScale(26)}
+            color={textColor}
+          />
+        </LinearGradient>
+      </TouchableOpacity>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: moderateScale(12),
     backgroundColor: colorTwo,
+    padding: moderateScale(12),
+  },
+  headerView: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   header: {
     fontFamily: 'Mukta-Bold',
     fontSize: moderateScale(30),
+    color: colorFifteen,
+    marginLeft: horizontalScale(65),
+    marginVertical: verticalScale(20),
+  },
+  title: {
+    fontSize: moderateScale(24),
+    fontFamily: 'Mukta-Bold',
     textAlign: 'center',
     marginVertical: verticalScale(8),
     color: colorFifteen,
-    elevation: 10,
   },
-  title: {
-    fontFamily: 'Mukta-Bold',
-    fontSize: moderateScale(24),
-    textAlign: 'center',
-    marginBottom: verticalScale(20),
-    color: colorThirteen,
+  imageBackground: {
+    maxHeight: verticalScale(260),
+    maxWidth: windowWidth - horizontalScale(50),
+    borderRadius: moderateScale(12),
+    alignSelf: 'center',
   },
   slider: {
+    width: horizontalScale(340),
     height: verticalScale(60),
-    marginVertical: verticalScale(20),
+    marginVertical: verticalScale(12),
   },
   controls: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    alignItems: 'center',
+    marginTop: verticalScale(20),
   },
   listView: {
     padding: moderateScale(12),
-    paddingHorizontal: horizontalScale(25),
+    paddingHorizontal: horizontalScale(36),
     borderWidth: verticalScale(2),
     borderColor: colorEleven,
     borderRadius: moderateScale(28),
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginVertical: verticalScale(20),
+    marginTop: verticalScale(36),
   },
   listText: {
     fontFamily: 'Mukta-Bold',

@@ -83,7 +83,7 @@ export const MainPageCss = StyleSheet.create({
     alignItems: 'center',
   },
   bannerImage: {
-    width: horizontalScale(340),
+    width: horizontalScale(360),
     height: verticalScale(280),
     borderRadius: moderateScale(10),
     borderColor: colorNine,
@@ -114,10 +114,10 @@ export const MainPageCss = StyleSheet.create({
     backgroundColor: colorOne,
   },
   eventContainer: {
-    height: verticalScale(300),
+    height: verticalScale(180),
     backgroundColor: colorTwo,
-    padding: moderateScale(18),
-    margin: moderateScale(18),
+    padding: moderateScale(12),
+    margin: moderateScale(10),
     borderRadius: moderateScale(10),
     borderWidth: moderateScale(2),
     borderColor: colorFifteen,

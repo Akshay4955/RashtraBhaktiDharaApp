@@ -34,16 +34,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: moderateScale(20),
-    marginVertical: verticalScale(8),
+    marginVertical: verticalScale(6),
     borderWidth: moderateScale(1),
     borderColor: colorTwo,
-    elevation: 5
+    elevation: 5,
   },
   headerText: {
     fontFamily: 'Mukta-Bold',
     fontSize: moderateScale(28),
-    paddingHorizontal: horizontalScale(50),
-    paddingVertical: verticalScale(6),
+    paddingHorizontal: horizontalScale(40),
     color: textColor,
   },
 });

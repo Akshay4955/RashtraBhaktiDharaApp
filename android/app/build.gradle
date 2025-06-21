@@ -84,8 +84,8 @@ android {
         applicationId "com.rashtrabhaktidharaapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 8
-        versionName "2.2.0"
+        versionCode 15
+        versionName "5.0.0"
     }
     signingConfigs {
         debug {
@@ -147,6 +147,8 @@ dependencies {
 
     // For WebP support, without animations
     implementation 'com.facebook.fresco:webpsupport:3.2.0'
+    // implementation for google ad services
+    implementation 'com.google.android.gms:play-services-ads:22.2.0'
 }
 
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
