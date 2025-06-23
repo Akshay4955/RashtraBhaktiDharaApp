@@ -6,7 +6,6 @@ import {
   SafeAreaView,
   Text,
   TouchableOpacity,
-  View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -33,37 +32,21 @@ const ShlokList = () => {
             start={{x: 0, y: 0}}
             end={{x: 1, y: 0}}>
             <Text style={styles.listText}>{item?.title}</Text>
-            <Icon
-              name={'chevron-forward'}
-              size={moderateScale(26)}
-              color={textColor}
-            />
+            {item?.audio ? (
+              <Icon
+                name={'play-circle-sharp'}
+                size={moderateScale(36)}
+                color={textColor}
+                onPress={() =>
+                  navigation.navigate('Audio', {
+                    url: item?.audio,
+                    title: item?.title,
+                  })
+                }
+              />
+            ) : null}
           </LinearGradient>
         </TouchableOpacity>
-        {item?.audio ? (
-          <TouchableOpacity
-            style={styles.listViewAudio}
-            onPress={() => navigation.navigate('Audio', {url: item?.audio, title: item?.title})}>
-            <View style={{flexDirection: 'row'}}>
-              <Icon
-                name={'musical-notes'}
-                size={moderateScale(26)}
-                color={textColor}
-              />
-              <Text style={styles.listText}>{item.title}</Text>
-              <Icon
-                name={'musical-notes'}
-                size={moderateScale(26)}
-                color={textColor}
-              />
-            </View>
-            <Icon
-              name={'chevron-forward'}
-              size={moderateScale(26)}
-              color={textColor}
-            />
-          </TouchableOpacity>
-        ) : null}
       </>
     );
   };

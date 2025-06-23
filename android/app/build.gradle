@@ -84,8 +84,8 @@ android {
         applicationId "com.rashtrabhaktidharaapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 6
-        versionName "2.0.0"
+        versionCode 15
+        versionName "5.0.0"
     }
     signingConfigs {
         debug {
@@ -120,7 +120,7 @@ dependencies {
         implementation jscFlavor
     }
 
-    implementation(platform('com.google.firebase:firebase-bom:33.2.0'))
+    implementation(platform('com.google.firebase:firebase-bom:33.5.0'))
     // Add the dependencies for the Crashlytics and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-crashlytics")
@@ -128,7 +128,8 @@ dependencies {
     // Add the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-auth")
-
+    //dependency for app Check
+    implementation("com.google.firebase:firebase-appcheck-playintegrity")
     // Also add the dependency for the Google Play services library and specify its version for google sign in auth
     implementation("com.google.android.gms:play-services-auth:21.2.0")
     // Add the dependency for the Realtime Database library
@@ -146,6 +147,8 @@ dependencies {
 
     // For WebP support, without animations
     implementation 'com.facebook.fresco:webpsupport:3.2.0'
+    // implementation for google ad services
+    implementation 'com.google.android.gms:play-services-ads:22.2.0'
 }
 
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"

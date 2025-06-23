@@ -17,3 +17,5 @@
 -keep class com.facebook.react.bridge.** { *; }
 -keep class com.facebook.fresco.** { *; }
 -keep class com.facebook.imagepipeline.** { *; }
+-dontwarn android.media.LoudnessCodecController$OnLoudnessCodecUpdateListener
+-dontwarn android.media.LoudnessCodecController

@@ -1,6 +1,7 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import React from 'react';
 import {PadyaList, Profile, ShlokList} from '../components/screens';
+import ChhandList from '../components/screens/ChhandList';
 import {
   colorEight,
   colorOne,
@@ -8,7 +9,7 @@ import {
   colorThree,
   textColor,
 } from '../utils/constants/color';
-import {moderateScale} from '../utils/constants/Metrics';
+import {moderateScale, verticalScale} from '../utils/constants/Metrics';
 import {HeaderTitle, ScreenNames} from '../utils/constants/TextConstants';
 import BottomTabNavigationManager from './BottomTabNavigationManager';
 
@@ -31,6 +32,11 @@ const DrawerNavigator = () => {
         drawerStyle: {
           backgroundColor: colorOne,
         },
+        drawerLabelStyle: {
+          fontFamily: 'Mukta-Bold',
+          fontSize: moderateScale(16),
+          marginVertical: verticalScale(-4),
+        },
         drawerActiveBackgroundColor: colorSeven,
         drawerActiveTintColor: textColor,
         drawerInactiveBackgroundColor: colorThree,
@@ -49,6 +55,11 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name={ScreenNames.Sloks}
         component={ShlokList}
+        options={screenOptions}
+      />
+      <Drawer.Screen
+        name={ScreenNames.BhushanChhand}
+        component={ChhandList}
         options={screenOptions}
       />
       <Drawer.Screen

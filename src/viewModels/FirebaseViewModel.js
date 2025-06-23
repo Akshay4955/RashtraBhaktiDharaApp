@@ -20,7 +20,7 @@ const FirebaseViewModel = () => {
 
     setTimeout(() => {
       reference.off('value', onValueChange);
-    }, 5000);
+    }, 8000);
   }, []);
   return {
     firebaseData,

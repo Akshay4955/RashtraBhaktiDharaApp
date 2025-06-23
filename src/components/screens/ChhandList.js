@@ -10,18 +10,16 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import Icon from 'react-native-vector-icons/Ionicons';
 import {useFirebaseData} from '../../navigation/FirebaseProvider';
 import {ListCss as styles} from '../../styles/screens/ListCss';
 import {colorNine, colorThree, textColor} from '../../utils/constants/color';
-import {moderateScale} from '../../utils/constants/Metrics';
 import {Headers} from '../../utils/constants/TextConstants';
 import ListHeader from '../common/ListHeader';
 
-const PadyaList = () => {
+const ChhandList = () => {
   const navigation = useNavigation();
   const {firebaseData} = useFirebaseData();
-  const data = firebaseData?.Padya;
+  const data = firebaseData?.BhushanChhand;
   const [searchQuery, setSearchQuery] = useState('');
   const flatListRef = useRef(null);
 
@@ -50,19 +48,6 @@ const PadyaList = () => {
           start={{x: 0, y: 0}}
           end={{x: 1, y: 0}}>
           <Text style={styles.listText}>{item?.title}</Text>
-          {item?.audio ? (
-            <Icon
-              name={'play-circle-sharp'}
-              size={moderateScale(36)}
-              color={textColor}
-              onPress={() =>
-                navigation.navigate('Audio', {
-                  url: item?.audio,
-                  title: item?.title,
-                })
-              }
-            />
-          ) : null}
         </LinearGradient>
       </TouchableOpacity>
     );
@@ -70,7 +55,7 @@ const PadyaList = () => {
 
   return (
     <SafeAreaView style={styles.mainView}>
-      <ListHeader header={Headers.Padya} />
+      <ListHeader header={Headers.BhushanChhand} />
       <TextInput
         style={styles.searchInput}
         placeholder="शोधा...!!!"
@@ -100,4 +85,4 @@ const PadyaList = () => {
   );
 };
 
-export default PadyaList;
+export default ChhandList;

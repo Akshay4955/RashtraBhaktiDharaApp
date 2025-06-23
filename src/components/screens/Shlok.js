@@ -2,7 +2,6 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import {useNavigation} from '@react-navigation/native';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
-  Alert,
   FlatList,
   Text,
   TextInput,
@@ -23,6 +22,7 @@ import {
   textColor,
 } from '../../utils/constants/color';
 import Logger from '../../utils/logUtility/Logger';
+import CustomBannerAd from '../common/CustomBannerAd';
 import PoemHeader from './PoemHeader';
 
 const Shlok = ({route}) => {
@@ -203,6 +203,7 @@ const Shlok = ({route}) => {
           index,
         })}
       />
+      <CustomBannerAd />
       {showCopyButton ? (
         <TouchableOpacity
           style={[

@@ -17,6 +17,7 @@ import {
   colorThree,
   textColor,
 } from '../../utils/constants/color';
+import CustomBannerAd from '../common/CustomBannerAd';
 import PoemHeader from './PoemHeader';
 
 const Poem = ({route}) => {
@@ -43,6 +44,7 @@ const Poem = ({route}) => {
           <ActivityIndicator size={'large'} color={colorOne} />
         )}
       </ScrollView>
+      <CustomBannerAd />
     </LinearGradient>
   );
 };

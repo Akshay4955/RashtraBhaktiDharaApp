@@ -14,8 +14,8 @@ import {
 export const ListCss = StyleSheet.create({
   mainView: {flex: 1, backgroundColor: colorOne},
   listView: {
-    padding: moderateScale(16),
-    paddingLeft: horizontalScale(25),
+    paddingVertical: moderateScale(10),
+    paddingHorizontal: horizontalScale(30),
     borderWidth: verticalScale(1),
     borderColor: colorEleven,
     borderRadius: moderateScale(28),
@@ -36,9 +36,9 @@ export const ListCss = StyleSheet.create({
   },
   listText: {
     fontFamily: 'Mukta-Bold',
-    fontSize: moderateScale(17),
+    fontSize: moderateScale(20),
     color: textColor,
-    marginHorizontal: horizontalScale(6),
+    // marginHorizontal: horizontalScale(6),
   },
   footer: {
     marginVertical: verticalScale(6),

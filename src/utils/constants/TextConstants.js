@@ -9,6 +9,7 @@ export const Headers = {
   DhyeyaMantra: '|| ध्येय मंत्र ||',
   Padya: '|| पद्य ||',
   Shlok: '|| श्लोक ||',
+  BhushanChhand: 'कवी भूषण छंद',
 };
 export const ScreenNames = {
   MainPage: 'मुख्य पृष्ठ',
@@ -17,4 +18,6 @@ export const ScreenNames = {
   Profile: 'प्रोफाइल',
   PreranaMantra: 'प्रेरणा मंत्र',
   DhyeyaMantra: 'ध्येय मंत्र',
+  BhushanChhand: 'कवी भूषण छंद',
+  MoreTab: 'अधिक माहिती',
 };

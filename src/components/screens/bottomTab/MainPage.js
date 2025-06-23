@@ -1,12 +1,11 @@
 import {useIsFocused, useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
   Image,
   Modal,
   SafeAreaView,
-  ScrollView,
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -19,6 +18,10 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import images from '../../../assets/images';
 import {useFirebaseData} from '../../../navigation/FirebaseProvider';
+import {
+  requestNotificationPermission,
+  setupTrackPlayer,
+} from '../../../services/audioPlayerService';
 import {MainPageCss as styles} from '../../../styles/screens/MainPageCss';
 import {formatData} from '../../../utils/commonUtils';
 import {moderateScale} from '../../../utils/constants/Metrics';
@@ -43,6 +46,14 @@ const MainPage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
+  useEffect(() => {
+    const init = async () => {
+      await requestNotificationPermission();
+      await setupTrackPlayer();
+    };
+    init();
+  }, []);
+
   const openFullScreen = item => {
     setSelectedImage(item);
     setIsModalVisible(true);
@@ -65,6 +76,43 @@ const MainPage = () => {
     </TouchableWithoutFeedback>
   );
 
+  const HeaderView = React.memo(() => (
+    <>
+      <View style={styles.headerView}>
+        <View style={styles.imageView}>
+          <Image
+            style={styles.image2}
+            source={images.maharaj}
+            resizeMode="stretch"
+          />
+          <View style={styles.logoImage}>
+            <Image
+              style={styles.image}
+              source={images.pratishthan}
+              resizeMode="stretch"
+            />
+            <Text style={styles.header}>{JayatuHinduRashtram}</Text>
+          </View>
+          <Image
+            style={styles.image2}
+            source={images.maharaj2}
+            resizeMode="stretch"
+          />
+        </View>
+        <Text style={styles.mainText}>{ShriShivPratishthan}</Text>
+        <Text style={styles.mainText}>{Slogan}</Text>
+      </View>
+      {data ? (
+        <CustomAnimatedCarousel
+          focused={focused}
+          isModalVisible={isModalVisible}
+          data={data}
+          renderItem={renderItem}
+        />
+      ) : null}
+    </>
+  ));
+
   const renderItemEvent = ({item}) => (
     <TouchableOpacity
       activeOpacity={0.8}
@@ -78,59 +126,21 @@ const MainPage = () => {
   );
   return (
     <SafeAreaView style={styles.mainView}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.headerView}>
-          <View style={styles.imageView}>
-            <Image
-              style={styles.image2}
-              source={images.maharaj}
-              resizeMode="stretch"
-            />
-            <View style={styles.logoImage}>
-              <Image
-                style={styles.image}
-                source={images.pratishthan}
-                resizeMode="stretch"
-              />
-              <Text style={styles.header}>{JayatuHinduRashtram}</Text>
-            </View>
-            <Image
-              style={styles.image2}
-              source={images.maharaj2}
-              resizeMode="stretch"
-            />
-          </View>
-          <Text style={styles.mainText}>{ShriShivPratishthan}</Text>
-          <Text style={styles.mainText}>{Slogan}</Text>
-        </View>
-
-        {data ? (
-          <>
-            <CustomAnimatedCarousel
-              focused={focused}
-              isModalVisible={isModalVisible}
-              data={data}
-              renderItem={renderItem}
-            />
-            {data?.event ? (
-              <FlatList
-                data={data?.event}
-                keyExtractor={item => item?.title}
-                renderItem={renderItemEvent}
-                showsVerticalScrollIndicator={false}
-                initialNumToRender={2}
-                maxToRenderPerBatch={2}
-                windowSize={2}
-                ListEmptyComponent={
-                  <ActivityIndicator style={styles.loader} size={'large'} />
-                }
-              />
-            ) : null}
-          </>
-        ) : (
-          <ActivityIndicator style={styles.loader} size={'large'} />
-        )}
-      </ScrollView>
+      {data?.event ? (
+        <FlatList
+          data={data?.event}
+          keyExtractor={item => item?.title}
+          renderItem={renderItemEvent}
+          showsVerticalScrollIndicator={false}
+          initialNumToRender={2}
+          maxToRenderPerBatch={2}
+          windowSize={2}
+          ListHeaderComponent={<HeaderView />}
+          ListEmptyComponent={
+            <ActivityIndicator style={styles.loader} size={'large'} />
+          }
+        />
+      ) : null}
       {selectedImage && (
         <Modal
           visible={isModalVisible}
