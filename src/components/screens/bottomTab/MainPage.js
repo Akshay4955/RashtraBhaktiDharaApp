@@ -18,6 +18,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import images from '../../../assets/images';
 import {useFirebaseData} from '../../../navigation/FirebaseProvider';
+import {checkUpdateAvailability} from '../../../services/appUpdateService';
 import {
   requestNotificationPermission,
   setupTrackPlayer,
@@ -31,6 +32,7 @@ import {
   Slogan,
 } from '../../../utils/constants/TextConstants';
 import {textColor} from '../../../utils/constants/color';
+import UpdateModal from '../../common/UpdateModal';
 import CustomAnimatedCarousel from '../CustomAnimatedCarousel';
 
 configureReanimatedLogger({
@@ -45,11 +47,18 @@ const MainPage = () => {
   const data = firebaseData?.MainPageData;
   const [selectedImage, setSelectedImage] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [updateAvailable, setUpdateAvailable] = useState(false);
+  const [updateModalVisible, setUpdateModalVisible] = useState(false);
 
   useEffect(() => {
     const init = async () => {
       await requestNotificationPermission();
       await setupTrackPlayer();
+      const status = checkUpdateAvailability();
+      setUpdateAvailable(status);
+      if (status) {
+        setUpdateModalVisible(true);
+      }
     };
     init();
   }, []);
@@ -62,6 +71,10 @@ const MainPage = () => {
   const closeFullScreen = () => {
     setIsModalVisible(false);
     setSelectedImage(null);
+  };
+
+  const closeUpdateModal = () => {
+    setUpdateModalVisible(false);
   };
 
   const renderItem = ({item}) => (
@@ -159,6 +172,12 @@ const MainPage = () => {
             </TouchableOpacity>
           </View>
         </Modal>
+      )}
+      {updateAvailable && (
+        <UpdateModal
+          isVisible={updateModalVisible}
+          onClose={closeUpdateModal}
+        />
       )}
     </SafeAreaView>
   );

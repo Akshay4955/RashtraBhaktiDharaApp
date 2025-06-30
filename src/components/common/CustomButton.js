@@ -6,12 +6,12 @@ import {
   colorSix,
   colorTwelve,
   textColor,
-} from '../utils/constants/color';
+} from '../../utils/constants/color';
 import {
   horizontalScale,
   moderateScale,
   verticalScale,
-} from '../utils/constants/Metrics';
+} from '../../utils/constants/Metrics';
 
 const CustomButton = props => {
   const {onPress, title} = props;
@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: 'Mukta-Bold',
     fontSize: moderateScale(16),
-    paddingVertical: verticalScale(10),
+    marginVertical: verticalScale(10),
+    marginHorizontal: horizontalScale(20),
     color: textColor,
   },
 });

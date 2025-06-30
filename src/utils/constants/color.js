@@ -15,6 +15,10 @@ const colorTwelve = '#FF6900';
 const colorThirteen = '#FF5A00';
 const colorFourteen = '#FF4B00';
 const colorFifteen = '#FF3D00';
+const redColor = '#FF0000';
+const lighterGray = '#D9D9D9';
+const greenColor = '#059669';
+const darkGray = '#374151';
 
 export {
   backgroundColor,
@@ -33,5 +37,9 @@ export {
   colorThree,
   colorTwelve,
   colorTwo,
+  darkGray,
+  greenColor,
+  lighterGray,
+  redColor,
   textColor,
 };

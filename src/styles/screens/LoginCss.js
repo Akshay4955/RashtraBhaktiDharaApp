@@ -1,6 +1,10 @@
 import {StyleSheet} from 'react-native';
 import {moderateScale, verticalScale} from '../../utils/constants/Metrics';
-import {backgroundColor, colorNine} from '../../utils/constants/color';
+import {
+  backgroundColor,
+  colorNine,
+  colorSix,
+} from '../../utils/constants/color';
 
 export const LoginCss = StyleSheet.create({
   mainView: {
@@ -18,6 +22,8 @@ export const LoginCss = StyleSheet.create({
   },
   signInButton: {
     marginVertical: moderateScale(12),
-    elevation: 20,
+    elevation: moderateScale(20),
+    backgroundColor: colorSix,
+    borderRadius: moderateScale(12),
   },
 });

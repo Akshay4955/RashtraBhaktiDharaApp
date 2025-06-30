@@ -84,8 +84,8 @@ android {
         applicationId "com.rashtrabhaktidharaapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 15
-        versionName "5.0.0"
+        versionCode 18
+        versionName "5.1.0"
     }
     signingConfigs {
         debug {

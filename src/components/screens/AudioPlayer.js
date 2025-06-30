@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {TestIds} from 'react-native-google-mobile-ads';
 import LinearGradient from 'react-native-linear-gradient';
 import TrackPlayer, {
   usePlaybackState,
@@ -31,10 +30,9 @@ import {
   verticalScale,
   windowWidth,
 } from '../../utils/constants/Metrics';
-
-const adUnitId = __DEV__
-  ? TestIds.ADAPTIVE_BANNER
-  : 'ca-app-pub-2249316745492384/6186159072';
+import useNetInfoStatus from '../../utils/useNetInfoStatus';
+import CustomBannerAd from '../common/CustomBannerAd';
+import NoInternet from './NoInternet';
 
 const AudioPlayer = ({route}) => {
   const {url, title} = route?.params;
@@ -42,6 +40,7 @@ const AudioPlayer = ({route}) => {
   const {position, duration} = useProgress();
   const navigation = useNavigation();
   const [isPlaying, setIsPlaying] = useState(false);
+  const isConnected = useNetInfoStatus();
 
   useEffect(() => {
     setupAudio();
@@ -101,6 +100,10 @@ const AudioPlayer = ({route}) => {
     await TrackPlayer.seekTo(newPosition > 0 ? newPosition : 0);
   };
 
+  if (!isConnected) {
+    return <NoInternet />;
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.headerView}>
@@ -112,6 +115,7 @@ const AudioPlayer = ({route}) => {
         />
         <Text style={styles.header}>संगीतबद्ध श्लोक</Text>
       </View>
+      <CustomBannerAd />
       <Text style={styles.title}>{title}</Text>
       <Image
         source={images.audioBackground}
@@ -182,7 +186,7 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(30),
     color: colorFifteen,
     marginLeft: horizontalScale(65),
-    marginVertical: verticalScale(20),
+    marginVertical: verticalScale(10),
   },
   title: {
     fontSize: moderateScale(24),

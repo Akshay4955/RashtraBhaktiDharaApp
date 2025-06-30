@@ -17,12 +17,10 @@ class AuthModel {
 
       // // Create Google credential with the idToken
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      console.log('kjcgkgdc', googleCredential)
       // // Sign in with Firebase using the Google credential
       const userCredential = await auth().signInWithCredential(
         googleCredential,
       );
-      console.log('bkgcsakg', userCredential)
 
       // Return the authenticated user
       return userCredential.user;
