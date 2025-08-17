@@ -1,10 +1,12 @@
 import remoteConfig from '@react-native-firebase/remote-config';
 import React, {useEffect} from 'react';
+import {AppState} from 'react-native';
 import Index from './navigation/Index';
+import Logger from './utils/logUtility/Logger';
 
 const App = () => {
-  useEffect(() => {
-    const fetchRemoteConfig = async () => {
+  const fetchRemoteConfig = async () => {
+    try {
       await remoteConfig()
         .setDefaults({
           version_code: 17,
@@ -12,18 +14,73 @@ const App = () => {
         .then(() => remoteConfig().fetchAndActivate())
         .then(fetchedRemotely => {
           if (fetchedRemotely) {
-            console.log(
+            Logger.log(
               'Configs were retrieved from the backend and activated.',
             );
           } else {
-            console.log(
+            Logger.log(
               'No configs were fetched from the backend, and the local configs were already activated',
             );
           }
         });
-    };
+    } catch (error) {
+      Logger.error('Failed to fetch remote config:', error);
+    }
+  };
 
+  const subscribeToRemoteConfigUpdates = () => {
+    const unsubscriber = remoteConfig().onConfigUpdated(
+      async (event, error) => {
+        if (error) {
+          Logger.error('Remote Config listener error:', error);
+        } else {
+          Logger.log('Remote Config updated keys:', event.updatedKeys);
+          await remoteConfig().activate();
+          Logger.log('Remote Config activated from real-time update!');
+        }
+      },
+    );
+
+    return unsubscriber;
+  };
+  useEffect(() => {
+    let appStateListener = null;
+    let remoteConfigUnsubscriber = null;
+    let currentAppState = AppState.currentState;
+
+    const handleAppStateChange = nextAppState => {
+      if (
+        currentAppState.match(/active/) &&
+        nextAppState.match(/background|inactive/)
+      ) {
+        if (remoteConfigUnsubscriber) {
+          remoteConfigUnsubscriber();
+          remoteConfigUnsubscriber = null;
+        }
+      } else if (
+        currentAppState.match(/background|inactive/) &&
+        nextAppState === 'active'
+      ) {
+        fetchRemoteConfig();
+        remoteConfigUnsubscriber = subscribeToRemoteConfigUpdates();
+      }
+      currentAppState = nextAppState;
+    };
     fetchRemoteConfig();
+    remoteConfigUnsubscriber = subscribeToRemoteConfigUpdates();
+    appStateListener = AppState.addEventListener(
+      'change',
+      handleAppStateChange,
+    );
+
+    return () => {
+      if (remoteConfigUnsubscriber) {
+        remoteConfigUnsubscriber();
+      }
+      if (appStateListener && appStateListener.remove) {
+        appStateListener.remove();
+      }
+    };
   }, []);
   return <Index />;
 };

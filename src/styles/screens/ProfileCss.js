@@ -4,7 +4,12 @@ import {
   moderateScale,
   verticalScale,
 } from '../../utils/constants/Metrics';
-import {colorEight, colorOne, textColor} from '../../utils/constants/color';
+import {
+  colorEight,
+  colorOne,
+  textColor,
+  white,
+} from '../../utils/constants/color';
 
 export const ProfileCss = StyleSheet.create({
   mainView: {
@@ -34,5 +39,35 @@ export const ProfileCss = StyleSheet.create({
     fontSize: moderateScale(17),
     color: textColor,
     marginTop: verticalScale(12),
+  },
+  buttonContainer: {
+    width: '90%',
+    marginVertical: verticalScale(20),
+    marginBottom: verticalScale(60),
+  },
+  contactButton: {
+    backgroundColor: colorEight,
+    flexDirection: 'row',
+    paddingHorizontal: horizontalScale(80),
+    borderRadius: moderateScale(8),
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    elevation: moderateScale(3),
+    shadowColor: textColor,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+  },
+  contactButtonText: {
+    color: white,
+    fontSize: moderateScale(20),
+    fontFamily: 'Mukta-Bold',
+  },
+  whatsappIcon: {
+    width: horizontalScale(50),
+    height: verticalScale(50),
   },
 });

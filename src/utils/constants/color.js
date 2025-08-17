@@ -19,6 +19,7 @@ const redColor = '#FF0000';
 const lighterGray = '#D9D9D9';
 const greenColor = '#059669';
 const darkGray = '#374151';
+const white = '#FFFFFF';
 
 export {
   backgroundColor,
@@ -42,4 +43,5 @@ export {
   lighterGray,
   redColor,
   textColor,
+  white,
 };
