@@ -19,10 +19,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import images from '../../../assets/images';
 import {useFirebaseData} from '../../../navigation/FirebaseProvider';
 import {checkUpdateAvailability} from '../../../services/appUpdateService';
-import {
-  requestNotificationPermission,
-  setupTrackPlayer,
-} from '../../../services/audioPlayerService';
 import {MainPageCss as styles} from '../../../styles/screens/MainPageCss';
 import {formatData} from '../../../utils/commonUtils';
 import {moderateScale} from '../../../utils/constants/Metrics';
@@ -52,8 +48,6 @@ const MainPage = () => {
 
   useEffect(() => {
     const init = async () => {
-      await requestNotificationPermission();
-      await setupTrackPlayer();
       const status = checkUpdateAvailability();
       setUpdateAvailable(status);
       if (status) {

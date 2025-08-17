@@ -2,6 +2,10 @@ import remoteConfig from '@react-native-firebase/remote-config';
 import React, {useEffect} from 'react';
 import {AppState} from 'react-native';
 import Index from './navigation/Index';
+import {
+  requestNotificationPermission,
+  setupTrackPlayer,
+} from './services/audioPlayerService';
 import Logger from './utils/logUtility/Logger';
 
 const App = () => {
@@ -48,6 +52,17 @@ const App = () => {
     let remoteConfigUnsubscriber = null;
     let currentAppState = AppState.currentState;
 
+    // Initialize TrackPlayer and request permissions at app level
+    const initializeApp = async () => {
+      try {
+        await requestNotificationPermission();
+        await setupTrackPlayer();
+        Logger.log('App and TrackPlayer initialization complete');
+      } catch (error) {
+        Logger.error('App initialization failed:', error);
+      }
+    };
+
     const handleAppStateChange = nextAppState => {
       if (
         currentAppState.match(/active/) &&
@@ -66,6 +81,8 @@ const App = () => {
       }
       currentAppState = nextAppState;
     };
+
+    initializeApp();
     fetchRemoteConfig();
     remoteConfigUnsubscriber = subscribeToRemoteConfigUpdates();
     appStateListener = AppState.addEventListener(
