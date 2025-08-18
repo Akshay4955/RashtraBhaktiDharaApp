@@ -22,4 +22,5 @@ export const ScreenNames = {
   DhyeyaMantra: 'ध्येय मंत्र',
   BhushanChhand: 'कवी भूषण छंद',
   MoreTab: 'अधिक माहिती',
+  ContactUs: 'संपर्क साधा',
 };

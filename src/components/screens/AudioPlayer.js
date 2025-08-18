@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   Image,
   Linking,
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -150,7 +151,7 @@ const AudioPlayer = ({route}) => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.headerView}>
         <Icon
           name={'arrow-back'}
@@ -224,7 +225,7 @@ const AudioPlayer = ({route}) => {
           />
         </LinearGradient>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -1,4 +1,3 @@
-import {PermissionsAndroid, Platform} from 'react-native';
 import TrackPlayer, {Capability} from 'react-native-track-player';
 import Logger from '../utils/logUtility/Logger';
 
@@ -49,14 +48,4 @@ export const setupTrackPlayer = async () => {
     Logger.error('Error initializing TrackPlayer:', err);
     throw err;
   }
-};
-
-export const requestNotificationPermission = async () => {
-  if (Platform.OS === 'android' && Platform.Version >= 33) {
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-    );
-    return granted === PermissionsAndroid.RESULTS.GRANTED;
-  }
-  return true;
 };

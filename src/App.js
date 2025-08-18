@@ -2,10 +2,7 @@ import remoteConfig from '@react-native-firebase/remote-config';
 import React, {useEffect} from 'react';
 import {AppState} from 'react-native';
 import Index from './navigation/Index';
-import {
-  requestNotificationPermission,
-  setupTrackPlayer,
-} from './services/audioPlayerService';
+import {setupTrackPlayer} from './services/audioPlayerService';
 import Logger from './utils/logUtility/Logger';
 
 const App = () => {
@@ -55,7 +52,6 @@ const App = () => {
     // Initialize TrackPlayer and request permissions at app level
     const initializeApp = async () => {
       try {
-        await requestNotificationPermission();
         await setupTrackPlayer();
         Logger.log('App and TrackPlayer initialization complete');
       } catch (error) {

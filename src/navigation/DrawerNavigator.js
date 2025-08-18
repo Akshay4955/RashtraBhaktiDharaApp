@@ -2,6 +2,7 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import React from 'react';
 import {PadyaList, Profile, ShlokList} from '../components/screens';
 import ChhandList from '../components/screens/ChhandList';
+import ContactUs from '../components/screens/ContactUs';
 import {
   colorEight,
   colorOne,
@@ -65,6 +66,11 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name={ScreenNames.Profile}
         component={Profile}
+        options={screenOptions}
+      />
+      <Drawer.Screen
+        name={ScreenNames.ContactUs}
+        component={ContactUs}
         options={screenOptions}
       />
     </Drawer.Navigator>
