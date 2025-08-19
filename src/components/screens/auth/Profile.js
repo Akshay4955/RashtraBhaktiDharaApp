@@ -1,5 +1,6 @@
 import React from 'react';
 import {Button, Image, Text, View} from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import {useAuth} from '../../../navigation/AuthenticationProvider';
 import {ProfileCss} from '../../../styles/screens/ProfileCss';
 import Logger from '../../../utils/logUtility/Logger';
@@ -17,21 +18,36 @@ const Profile = () => {
   };
   return (
     <View style={ProfileCss.mainView}>
-      <Header header={'प्रोफाइल'} />
-      <Image
-        style={ProfileCss.image}
-        source={{
-          uri: user?.photoURL,
-        }}
-      />
-      <View style={ProfileCss.detailView}>
-        <Text style={ProfileCss.detailText}>Name: {user?.displayName}</Text>
-        <Text style={ProfileCss.detailText}>Email: {user?.email}</Text>
-        <Text style={ProfileCss.detailText}>
-          Phone Number: {user?.phoneNumber}
-        </Text>
+      <View style={ProfileCss.contentContainer}>
+        <Header header={'प्रोफाइल'} />
+        <Image
+          style={ProfileCss.image}
+          source={{
+            uri: user?.photoURL,
+          }}
+        />
+        <View style={ProfileCss.detailView}>
+          <View style={ProfileCss.detailRow}>
+            <Text style={ProfileCss.titleText}>Name: </Text>
+            <Text style={ProfileCss.valueText}>{user?.displayName}</Text>
+          </View>
+          <View style={ProfileCss.detailRow}>
+            <Text style={ProfileCss.titleText}>Email: </Text>
+            <Text style={ProfileCss.valueText}>{user?.email}</Text>
+          </View>
+          <View style={ProfileCss.detailRow}>
+            <Text style={ProfileCss.titleText}>Phone Number: </Text>
+            <Text style={ProfileCss.valueText}>{user?.phoneNumber}</Text>
+          </View>
+          <View style={ProfileCss.detailRow}>
+            <Text style={ProfileCss.titleText}>App Version: </Text>
+            <Text style={ProfileCss.valueText}>{DeviceInfo.getVersion()}</Text>
+          </View>
+        </View>
       </View>
-      <Button title="Logout" onPress={handleLogout} />
+      <View style={ProfileCss.logoutContainer}>
+        <Button title="Logout" onPress={handleLogout} />
+      </View>
     </View>
   );
 };

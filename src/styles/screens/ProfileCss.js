@@ -1,22 +1,36 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import {
   horizontalScale,
   moderateScale,
   verticalScale,
 } from '../../utils/constants/Metrics';
-import {colorEight, colorOne, textColor} from '../../utils/constants/color';
+import {
+  colorEight,
+  colorEleven,
+  colorFifteen,
+  colorOne,
+  textColor,
+} from '../../utils/constants/color';
 
 export const ProfileCss = StyleSheet.create({
   mainView: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: colorOne,
     borderColor: colorEight,
     borderWidth: moderateScale(2),
     borderRadius: moderateScale(12),
     margin: moderateScale(8),
-    paddingTop: verticalScale(30),
     elevation: moderateScale(7),
+  },
+  contentContainer: {
+    flex: 1,
+    alignItems: 'center',
+    paddingTop: verticalScale(30),
+  },
+  logoutContainer: {
+    paddingBottom: verticalScale(20),
+    paddingHorizontal: horizontalScale(20),
+    alignItems: 'center',
   },
   image: {
     height: verticalScale(150),
@@ -34,5 +48,20 @@ export const ProfileCss = StyleSheet.create({
     fontSize: moderateScale(17),
     color: textColor,
     marginTop: verticalScale(12),
+  },
+  detailRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: verticalScale(12),
+  },
+  titleText: {
+    fontFamily: 'Mukta-SemiBold',
+    fontSize: moderateScale(17),
+    color: colorEleven,
+  },
+  valueText: {
+    fontFamily: 'Mukta-Bold',
+    fontSize: moderateScale(17),
+    color: colorFifteen,
   },
 });
