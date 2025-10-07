@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   Image,
@@ -17,6 +17,7 @@ import {
   colorEight,
   colorEleven,
   colorFour,
+  lightGray,
   textColor,
   white,
 } from '../../utils/constants/color';
@@ -110,6 +111,7 @@ const ContactUs = () => {
       <View style={styles.buttonContainer}>
         <TextInput
           placeholder="नाव *"
+          placeholderTextColor={lightGray}
           style={styles.singleLineInput}
           value={name}
           onChangeText={setName}
@@ -117,6 +119,7 @@ const ContactUs = () => {
         />
         <TextInput
           placeholder="मोबाईल नंबर *"
+          placeholderTextColor={lightGray}
           style={styles.singleLineInput}
           value={mobileNumber}
           onChangeText={setMobileNumber}
@@ -125,6 +128,7 @@ const ContactUs = () => {
         />
         <TextInput
           placeholder="विभाग *"
+          placeholderTextColor={lightGray}
           style={styles.singleLineInput}
           value={area}
           onChangeText={setArea}
@@ -132,6 +136,7 @@ const ContactUs = () => {
         />
         <TextInput
           placeholder="तुमचा संदेश येथे लिहा ..."
+          placeholderTextColor={lightGray}
           style={styles.input}
           multiline
           value={message}

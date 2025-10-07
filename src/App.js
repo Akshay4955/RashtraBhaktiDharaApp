@@ -1,3 +1,5 @@
+import notifee, {AuthorizationStatus} from '@notifee/react-native';
+import messaging from '@react-native-firebase/messaging';
 import remoteConfig from '@react-native-firebase/remote-config';
 import React, {useEffect} from 'react';
 import {AppState} from 'react-native';
@@ -94,6 +96,67 @@ const App = () => {
         appStateListener.remove();
       }
     };
+  }, []);
+
+  useEffect(() => {
+    async function bootstrapFCM() {
+      // Request permission using Notifee (handles Android 13 and iOS)
+      const settings = await notifee.requestPermission();
+      if (settings.authorizationStatus >= AuthorizationStatus.AUTHORIZED) {
+        Logger.log('Notification permission granted');
+      } else {
+        Logger.log('Notification permission DENIED');
+      }
+
+      // Register (recommended) & get token
+      try {
+        await messaging().registerDeviceForRemoteMessages(); // safe to call
+        const token = await messaging().getToken();
+        Logger.log('FCM token:', token);
+        // send this token to your server
+      } catch (err) {
+        Logger.error('FCM token error', err);
+      }
+
+      // Foreground messages
+      const unsubscribeOnMessage = messaging().onMessage(
+        async remoteMessage => {
+          Logger.log('Foreground message:', remoteMessage);
+          // Show a local notification (system won't show it automatically in foreground)
+          await notifee.displayNotification({
+            title:
+              remoteMessage.notification?.title ?? remoteMessage.data?.title,
+            body: remoteMessage.notification?.body ?? remoteMessage.data?.body,
+            android: {
+              channelId: 'default',
+              pressAction: {id: 'default'},
+            },
+          });
+        },
+      );
+
+      // When the app is opened from a notification (background)
+      messaging().onNotificationOpenedApp(remoteMessage => {
+        Logger.log('onNotificationOpenedApp', remoteMessage);
+        // handle navigation using remoteMessage.data
+      });
+
+      // If the app was opened from quit state by a notification
+      messaging()
+        .getInitialNotification()
+        .then(remoteMessage => {
+          if (remoteMessage) {
+            console.log('getInitialNotification', remoteMessage);
+            // handle navigation
+          }
+        });
+
+      return () => {
+        unsubscribeOnMessage();
+      };
+    }
+
+    bootstrapFCM();
   }, []);
   return <Index />;
 };
