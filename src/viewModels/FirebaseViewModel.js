@@ -1,9 +1,10 @@
 import database from '@react-native-firebase/database';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import Logger from '../utils/logUtility/Logger';
 
 const FirebaseViewModel = () => {
   const [firebaseData, setFirebaseData] = useState(null);
+
   useEffect(() => {
     const reference = database().ref('/GlobalData');
 
@@ -12,16 +13,17 @@ const FirebaseViewModel = () => {
     };
 
     const handleError = err => {
-      Logger.log('Error:', err);
-      setFirebaseData([]);
+      Logger.log('Firebase Error:', err);
+      setFirebaseData(null);
     };
 
     reference.on('value', onValueChange, handleError);
 
     setTimeout(() => {
       reference.off('value', onValueChange);
-    }, 8000);
+    }, 12000);
   }, []);
+
   return {
     firebaseData,
   };

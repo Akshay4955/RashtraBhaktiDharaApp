@@ -9,7 +9,7 @@ import {colorOne, colorTen, colorThree} from '../../../utils/constants/color';
 import {verticalScale} from '../../../utils/constants/Metrics';
 import {Headers} from '../../../utils/constants/TextConstants';
 import CustomBannerAd from '../../common/CustomBannerAd';
-import CustomButton from '../../CustomButton';
+import CustomButton from '../../common/CustomButton';
 import Header from '../Header';
 
 const PreranaMantra = () => {

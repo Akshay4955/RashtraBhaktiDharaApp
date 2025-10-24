@@ -1,17 +1,19 @@
 import Slider from '@react-native-community/slider';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {
+  ActivityIndicator,
   Image,
   Linking,
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import {TestIds} from 'react-native-google-mobile-ads';
 import LinearGradient from 'react-native-linear-gradient';
 import TrackPlayer, {
+  State,
   usePlaybackState,
   useProgress,
 } from 'react-native-track-player';
@@ -21,7 +23,9 @@ import {
   colorEleven,
   colorFifteen,
   colorNine,
+  colorSix,
   colorThree,
+  colorTwelve,
   colorTwo,
   textColor,
 } from '../../utils/constants/color';
@@ -31,51 +35,84 @@ import {
   verticalScale,
   windowWidth,
 } from '../../utils/constants/Metrics';
-
-const adUnitId = __DEV__
-  ? TestIds.ADAPTIVE_BANNER
-  : 'ca-app-pub-2249316745492384/6186159072';
+import Logger from '../../utils/logUtility/Logger';
+import useNetInfoStatus from '../../utils/useNetInfoStatus';
+import CustomBannerAd from '../common/CustomBannerAd';
+import NoInternet from './NoInternet';
 
 const AudioPlayer = ({route}) => {
   const {url, title} = route?.params;
   const playbackState = usePlaybackState();
   const {position, duration} = useProgress();
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const [isPlaying, setIsPlaying] = useState(false);
+  const isConnected = useNetInfoStatus();
 
   useEffect(() => {
-    setupAudio();
+    // Only setup audio when screen is focused (prevents service start during navigation)
+    if (isFocused) {
+      setupAudio();
+    }
+
     return () => {
-      TrackPlayer.stop();
-      TrackPlayer.reset();
+      cleanupAudio();
     };
-  }, [url]);
+  }, [url, isFocused]);
+
+  const cleanupAudio = async () => {
+    try {
+      setIsPlaying(false);
+      await TrackPlayer.stop();
+      await TrackPlayer.reset();
+    } catch (error) {
+      Logger.log('Cleanup error:', error);
+    }
+  };
 
   const setupAudio = async () => {
-    await TrackPlayer.reset();
-    await TrackPlayer.add({
-      id: '1',
-      url: url,
-      title: title,
-      artist: 'Unknown',
-    });
+    try {
+      await TrackPlayer.reset();
+      await TrackPlayer.add({
+        id: '1',
+        url: url,
+        title: title,
+        artist: 'Unknown',
+      });
+    } catch (error) {
+      Logger.log('Setup audio error:', error);
+    }
   };
 
   const getDownloadURL = () =>
     url?.replace('export=view', 'export=download') || null;
 
+  // Check if audio is ready to play (not loading/buffering)
+  const isAudioReady =
+    playbackState.state !== undefined &&
+    playbackState.state !== State.Loading &&
+    playbackState.state !== State.Buffering;
+
   const togglePlayPause = async () => {
-    if (playbackState.state === 'playing') {
-      await TrackPlayer.pause();
-      setIsPlaying(false);
-    } else {
-      await TrackPlayer.play();
-      setIsPlaying(true);
+    try {
+      if (playbackState.state === 'playing') {
+        await TrackPlayer.pause();
+        setIsPlaying(false);
+      } else {
+        await TrackPlayer.play();
+        setIsPlaying(true);
+      }
+    } catch (error) {
+      Logger.log('Toggle play/pause error:', error);
     }
   };
 
   const seekAudio = async value => {
-    await TrackPlayer.seekTo(value);
+    try {
+      await TrackPlayer.seekTo(value);
+    } catch (error) {
+      Logger.log('Seek error:', error);
+    }
   };
 
   const handleDownloadClick = async () => {
@@ -90,19 +127,31 @@ const AudioPlayer = ({route}) => {
   };
 
   const forwardAudio = async () => {
-    const newPosition = position + 10;
-    if (newPosition < duration) {
-      await TrackPlayer.seekTo(newPosition);
+    try {
+      const newPosition = position + 10;
+      if (newPosition < duration) {
+        await TrackPlayer.seekTo(newPosition);
+      }
+    } catch (error) {
+      Logger.log('Forward error:', error);
     }
   };
 
   const backwardAudio = async () => {
-    const newPosition = position - 10;
-    await TrackPlayer.seekTo(newPosition > 0 ? newPosition : 0);
+    try {
+      const newPosition = position - 10;
+      await TrackPlayer.seekTo(newPosition > 0 ? newPosition : 0);
+    } catch (error) {
+      Logger.log('Backward error:', error);
+    }
   };
 
+  if (!isConnected) {
+    return <NoInternet />;
+  }
+
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.headerView}>
         <Icon
           name={'arrow-back'}
@@ -112,6 +161,7 @@ const AudioPlayer = ({route}) => {
         />
         <Text style={styles.header}>संगीतबद्ध श्लोक</Text>
       </View>
+      <CustomBannerAd />
       <Text style={styles.title}>{title}</Text>
       <Image
         source={images.audioBackground}
@@ -123,30 +173,42 @@ const AudioPlayer = ({route}) => {
         minimumValue={0}
         maximumValue={duration}
         value={position}
-        onSlidingComplete={seekAudio}
-        minimumTrackTintColor="orange"
+        onSlidingComplete={isAudioReady ? seekAudio : null}
+        disabled={!isAudioReady}
+        minimumTrackTintColor={isAudioReady ? colorTwelve : colorSix}
         maximumTrackTintColor="gray"
-        thumbTintColor="orange"
+        thumbTintColor={isAudioReady ? colorTwelve : colorSix}
       />
 
       <View style={styles.controls}>
         <Icon
           name="play-back-circle-outline"
           size={50}
-          color="black"
-          onPress={backwardAudio}
+          color={isAudioReady ? colorTwelve : colorSix}
+          onPress={isAudioReady ? backwardAudio : null}
         />
-        <Icon
-          name={isPlaying ? 'pause-circle-outline' : 'play-circle-outline'}
-          size={50}
-          color="black"
-          onPress={togglePlayPause}
-        />
+
+        {/* Show loader instead of play/pause when audio is not ready */}
+        {!isAudioReady ? (
+          <ActivityIndicator
+            size="large"
+            color={colorTwelve}
+            style={styles.loader}
+          />
+        ) : (
+          <Icon
+            name={isPlaying ? 'pause-circle-outline' : 'play-circle-outline'}
+            size={50}
+            color={colorTwelve}
+            onPress={togglePlayPause}
+          />
+        )}
+
         <Icon
           name="play-forward-circle-outline"
           size={50}
-          color="black"
-          onPress={forwardAudio}
+          color={isAudioReady ? colorTwelve : colorSix}
+          onPress={isAudioReady ? forwardAudio : null}
         />
       </View>
       <TouchableOpacity onPress={handleDownloadClick}>
@@ -163,7 +225,7 @@ const AudioPlayer = ({route}) => {
           />
         </LinearGradient>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -182,7 +244,7 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(30),
     color: colorFifteen,
     marginLeft: horizontalScale(65),
-    marginVertical: verticalScale(20),
+    marginVertical: verticalScale(10),
   },
   title: {
     fontSize: moderateScale(24),
@@ -205,7 +267,14 @@ const styles = StyleSheet.create({
   controls: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
+    alignItems: 'center',
     marginTop: verticalScale(20),
+  },
+  loader: {
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   listView: {
     padding: moderateScale(12),

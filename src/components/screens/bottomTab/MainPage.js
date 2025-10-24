@@ -18,10 +18,11 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import images from '../../../assets/images';
 import {useFirebaseData} from '../../../navigation/FirebaseProvider';
+import {checkUpdateAvailability} from '../../../services/appUpdateService';
 import {
+  checkNotificationPermission,
   requestNotificationPermission,
-  setupTrackPlayer,
-} from '../../../services/audioPlayerService';
+} from '../../../services/permissionService';
 import {MainPageCss as styles} from '../../../styles/screens/MainPageCss';
 import {formatData} from '../../../utils/commonUtils';
 import {moderateScale} from '../../../utils/constants/Metrics';
@@ -31,6 +32,9 @@ import {
   Slogan,
 } from '../../../utils/constants/TextConstants';
 import {textColor} from '../../../utils/constants/color';
+import Logger from '../../../utils/logUtility/Logger';
+import PermissionModal from '../../common/PermissionModal';
+import UpdateModal from '../../common/UpdateModal';
 import CustomAnimatedCarousel from '../CustomAnimatedCarousel';
 
 configureReanimatedLogger({
@@ -45,11 +49,30 @@ const MainPage = () => {
   const data = firebaseData?.MainPageData;
   const [selectedImage, setSelectedImage] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [updateAvailable, setUpdateAvailable] = useState(false);
+  const [updateModalVisible, setUpdateModalVisible] = useState(false);
+  const [showPermissionModal, setShowPermissionModal] = useState(false);
 
   useEffect(() => {
     const init = async () => {
-      await requestNotificationPermission();
-      await setupTrackPlayer();
+      const status = checkUpdateAvailability();
+      setUpdateAvailable(status);
+      if (status) {
+        setUpdateModalVisible(true);
+      }
+      const hasPermission = await checkNotificationPermission();
+      if (!hasPermission) {
+        const granted = await requestNotificationPermission();
+        Logger.log('Notification permission granted:', granted);
+        if (!granted) {
+          // Permission denied → show modal
+          setShowPermissionModal(true);
+        } else {
+          // Permission granted → get FCM token
+        }
+      } else {
+        // Already granted → continue
+      }
     };
     init();
   }, []);
@@ -62,6 +85,10 @@ const MainPage = () => {
   const closeFullScreen = () => {
     setIsModalVisible(false);
     setSelectedImage(null);
+  };
+
+  const closeUpdateModal = () => {
+    setUpdateModalVisible(false);
   };
 
   const renderItem = ({item}) => (
@@ -159,6 +186,18 @@ const MainPage = () => {
             </TouchableOpacity>
           </View>
         </Modal>
+      )}
+      {updateAvailable && (
+        <UpdateModal
+          isVisible={updateModalVisible}
+          onClose={closeUpdateModal}
+        />
+      )}
+      {showPermissionModal && (
+        <PermissionModal
+          showModal={showPermissionModal}
+          setShowModal={setShowPermissionModal}
+        />
       )}
     </SafeAreaView>
   );

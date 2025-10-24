@@ -4,6 +4,8 @@ export const Slogan = '|| राष्ट्रार्थ निर्मू �
 export const WelComeToAPP = 'राष्ट्रभक्तिधारा ॲपमध्ये आपले स्वागत आहे ..!!';
 export const ClickToLogin = 'पुढे जाण्यासाठी लॉग इन करा...';
 export const HeaderTitle = 'राष्ट्रभक्तीधारा';
+export const PlayStoreURL =
+  'https://play.google.com/store/apps/details?id=com.rashtrabhaktidharaapp';
 export const Headers = {
   PreranaMantra: '|| प्रेरणा मंत्र ||',
   DhyeyaMantra: '|| ध्येय मंत्र ||',
@@ -20,4 +22,5 @@ export const ScreenNames = {
   DhyeyaMantra: 'ध्येय मंत्र',
   BhushanChhand: 'कवी भूषण छंद',
   MoreTab: 'अधिक माहिती',
+  ContactUs: 'संपर्क साधा',
 };

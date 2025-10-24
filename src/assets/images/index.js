@@ -4,4 +4,5 @@ export default {
   pratishthan: require('./pratishthan.jpg'),
   audioBackground: require('./music.png'),
   audioPlaying: require('./musicPlaying.gif'),
+  whatsapp: require('./whatsapp.png')
 };

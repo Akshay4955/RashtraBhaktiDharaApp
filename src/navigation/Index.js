@@ -1,7 +1,6 @@
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import React, {useEffect} from 'react';
 import {MobileAds} from 'react-native-google-mobile-ads';
-import TrackPlayer from 'react-native-track-player';
 import Logger from '../utils/logUtility/Logger';
 import {AuthenticationProvider} from './AuthenticationProvider';
 import Routes from './Routes';

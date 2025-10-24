@@ -6,10 +6,9 @@ export const BottomTabCss = StyleSheet.create({
   tabBarLable: {
     fontFamily: 'Mukta-Bold',
     fontSize: moderateScale(17),
-    marginBottom: verticalScale(2),
   },
   tabBar: {
     backgroundColor: colorNine,
-    height: verticalScale(60),
+    height: verticalScale(76),
   },
 });
