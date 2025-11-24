@@ -56,7 +56,7 @@ const CustomAnimatedCarousel = props => {
       <Carousel
         loop
         width={horizontalScale(380)}
-        height={verticalScale(280)}
+        height={verticalScale(240)}
         autoPlay={focused && !isModalVisible}
         data={data?.images}
         scrollAnimationDuration={3000}

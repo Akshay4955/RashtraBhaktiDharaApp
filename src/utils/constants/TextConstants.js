@@ -14,6 +14,7 @@ export const Headers = {
   BhushanChhand: 'कवी भूषण छंद',
   GadkotMohima: '|| धारातीर्थ यात्रा ||',
   Gite: '|| गीते ||',
+  Parayan: 'श्री शिवचरित्र पारायण',
 };
 export const ScreenNames = {
   MainPage: 'मुख्य पृष्ठ',
@@ -32,4 +33,5 @@ export const ScreenNames = {
 export const Texts = {
   mohimPeriod: 'मोहिम कालावधी: ',
   mohimPath: 'गडकोट मोहिम: ',
+  Parayan: 'श्री शिवचरित्र पारायण',
 };

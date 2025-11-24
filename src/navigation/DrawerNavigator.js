@@ -17,6 +17,7 @@ import ChhandList from '../components/screens/ChhandList';
 import ContactUs from '../components/screens/ContactUs';
 import GadkotMohima from '../components/screens/GadkotMohima';
 import GiteList from '../components/screens/GiteList';
+import Parayan from '../components/screens/Parayan';
 import {
   colorEight,
   colorEleven,
@@ -127,6 +128,11 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name={ScreenNames.ContactUs}
         component={ContactUs}
+        options={screenOptions}
+      />
+      <Drawer.Screen
+        name={ScreenNames.Parayan}
+        component={Parayan}
         options={screenOptions}
       />
     </Drawer.Navigator>
