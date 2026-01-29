@@ -12,15 +12,22 @@ export const Headers = {
   Padya: '|| पद्य ||',
   Shlok: '|| श्लोक ||',
   BhushanChhand: 'कवी भूषण छंद',
+  GadkotMohima: '|| धारातीर्थ यात्रा ||',
 };
 export const ScreenNames = {
   MainPage: 'मुख्य पृष्ठ',
   Padyas: 'पद्य',
   Sloks: 'श्लोक',
+  GadkotMohima: 'आजवर झालेल्या गडकोट मोहिमा',
   Profile: 'प्रोफाइल',
   PreranaMantra: 'प्रेरणा मंत्र',
   DhyeyaMantra: 'ध्येय मंत्र',
   BhushanChhand: 'कवी भूषण छंद',
   MoreTab: 'अधिक माहिती',
   ContactUs: 'संपर्क साधा',
+};
+
+export const Texts = {
+  mohimPeriod: 'मोहिम कालावधी: ',
+  mohimPath: 'गडकोट मोहिम: ',
 };

@@ -15,6 +15,7 @@ import {
 import {PadyaList, Profile, ShlokList} from '../components/screens';
 import ChhandList from '../components/screens/ChhandList';
 import ContactUs from '../components/screens/ContactUs';
+import GadkotMohima from '../components/screens/GadkotMohima';
 import {
   colorEight,
   colorEleven,
@@ -105,6 +106,11 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name={ScreenNames.BhushanChhand}
         component={ChhandList}
+        options={screenOptions}
+      />
+      <Drawer.Screen
+        name={ScreenNames.GadkotMohima}
+        component={GadkotMohima}
         options={screenOptions}
       />
       <Drawer.Screen
