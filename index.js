@@ -2,6 +2,13 @@
  * @format
  */
 
+// Suppress React 19 ref warnings during ecosystem transition
+import {LogBox} from 'react-native';
+LogBox.ignoreLogs([
+  'Accessing element.ref was removed in React 19',
+  'ref will be removed from the JSX Element type in a future release'
+]);
+
 import notifee, {AndroidImportance} from '@notifee/react-native';
 import database from '@react-native-firebase/database';
 import messaging from '@react-native-firebase/messaging';
