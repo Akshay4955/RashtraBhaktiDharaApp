@@ -13,6 +13,7 @@ export const Headers = {
   Shlok: '|| श्लोक ||',
   BhushanChhand: 'कवी भूषण छंद',
   GadkotMohima: '|| धारातीर्थ यात्रा ||',
+  Gite: '|| गीते ||',
 };
 export const ScreenNames = {
   MainPage: 'मुख्य पृष्ठ',
@@ -25,6 +26,7 @@ export const ScreenNames = {
   BhushanChhand: 'कवी भूषण छंद',
   MoreTab: 'अधिक माहिती',
   ContactUs: 'संपर्क साधा',
+  Gite: 'गीते',
 };
 
 export const Texts = {
