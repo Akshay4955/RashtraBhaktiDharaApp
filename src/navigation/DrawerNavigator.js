@@ -16,6 +16,7 @@ import {PadyaList, Profile, ShlokList} from '../components/screens';
 import ChhandList from '../components/screens/ChhandList';
 import ContactUs from '../components/screens/ContactUs';
 import GadkotMohima from '../components/screens/GadkotMohima';
+import GiteList from '../components/screens/GiteList';
 import {
   colorEight,
   colorEleven,
@@ -101,6 +102,11 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name={ScreenNames.Sloks}
         component={ShlokList}
+        options={screenOptions}
+      />
+      <Drawer.Screen
+        name={ScreenNames.Gite}
+        component={GiteList}
         options={screenOptions}
       />
       <Drawer.Screen

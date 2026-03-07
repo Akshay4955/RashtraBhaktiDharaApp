@@ -16,7 +16,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:allowBackup="false"
         android:theme="@style/AppTheme"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:extractNativeLibs="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        tools:targetApi="31"
+        tools:ignore="DataExtractionRules">
+
+        <!-- 16KB Page Size Optimization -->
+        <meta-data
+            android:name="android.app.lib_name"
+            android:value="16kb_aligned" />
 
         <activity
             android:name=".MainActivity"
