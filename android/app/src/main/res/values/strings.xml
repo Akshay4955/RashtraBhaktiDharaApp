@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">राष्ट्रभक्तीधारा</string>
+    <string moduleConfig="true" name="CodePushServerUrl">https://api.revopush.org</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">LFn_XqbWRKKX4vqb3fU-fVhg3W7AVkjOa3NYQg</string>
 </resources>

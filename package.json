@@ -27,6 +27,7 @@
     "@react-navigation/drawer": "^6.7.2",
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/native-stack": "^6.11.0",
+    "@revopush/react-native-code-push": "^1.5.1",
     "react": "19.0.0",
     "react-native": "0.78.3",
     "react-native-device-info": "^14.0.2",

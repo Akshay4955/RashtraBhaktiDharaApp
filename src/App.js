@@ -1,6 +1,7 @@
 import notifee, {AuthorizationStatus} from '@notifee/react-native';
 import messaging from '@react-native-firebase/messaging';
 import remoteConfig from '@react-native-firebase/remote-config';
+import codePush from '@revopush/react-native-code-push';
 import React, {useEffect} from 'react';
 import {AppState} from 'react-native';
 import Index from './navigation/Index';
@@ -161,4 +162,11 @@ const App = () => {
   return <Index />;
 };
 
-export default App;
+const codePushOptions = {
+  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
+  installMode: codePush.InstallMode.ON_NEXT_RESTART,
+  mandatoryInstallMode: codePush.InstallMode.ON_NEXT_RESUME,
+  minimumBackgroundDuration: 60 * 10, // 10 minutes
+};
+
+export default codePush(codePushOptions)(App);
