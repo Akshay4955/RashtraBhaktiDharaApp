@@ -23,7 +23,7 @@ export const PoemCss = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: textColor,
     padding: moderateScale(8),
-    marginVertical: moderateScale(10),
+    marginBottom: moderateScale(6),
     color: textColor,
     fontSize: moderateScale(16),
   },
@@ -31,7 +31,7 @@ export const PoemCss = StyleSheet.create({
     fontSize: moderateScale(18),
     fontFamily: 'Mukta-Bold',
     color: textColor,
-    marginVertical: moderateScale(10),
+    marginVertical: moderateScale(6),
     textAlign: 'center',
   },
   contentText: {
@@ -56,7 +56,7 @@ export const PoemCss = StyleSheet.create({
   stanzaSpacing: {
     marginVertical: verticalScale(12),
   },
-  backButton: {alignSelf: 'flex-start'},
+  backButton: {alignSelf: 'flex-start', marginTop: verticalScale(18)},
   searchView: {
     position: 'absolute',
     left: windowWidth - horizontalScale(50),

@@ -12,6 +12,7 @@ import {
   colorOne,
   colorTen,
   colorThirteen,
+  colorThree,
   colorTwo,
   textColor,
 } from '../../utils/constants/color';
@@ -62,19 +63,16 @@ export const MainPageCss = StyleSheet.create({
     alignSelf: 'center',
     fontSize: moderateScale(22),
     color: colorEleven,
-    marginVertical: verticalScale(6),
   },
   subtitle: {
     fontFamily: 'Mukta-Bold',
     fontSize: moderateScale(18),
     color: colorTen,
-    marginVertical: verticalScale(6),
   },
   info: {
     fontFamily: 'Mukta-Medium',
     fontSize: moderateScale(14),
     color: textColor,
-    marginVertical: verticalScale(6),
   },
   loader: {
     marginTop: verticalScale(140),
@@ -114,8 +112,8 @@ export const MainPageCss = StyleSheet.create({
     backgroundColor: colorOne,
   },
   eventContainer: {
-    height: verticalScale(180),
-    backgroundColor: colorTwo,
+    height: verticalScale(120),
+    backgroundColor: colorThree,
     padding: moderateScale(12),
     margin: moderateScale(10),
     borderRadius: moderateScale(10),

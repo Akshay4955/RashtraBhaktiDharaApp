@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import {
   horizontalScale,
   moderateScale,
@@ -6,9 +6,9 @@ import {
 } from '../../utils/constants/Metrics';
 import {
   colorEight,
-  colorEleven,
   colorFifteen,
   colorOne,
+  colorThirteen,
   textColor,
 } from '../../utils/constants/color';
 
@@ -31,6 +31,7 @@ export const ProfileCss = StyleSheet.create({
     paddingBottom: verticalScale(20),
     paddingHorizontal: horizontalScale(20),
     alignItems: 'center',
+    marginBottom: verticalScale(30),
   },
   image: {
     height: verticalScale(150),
@@ -57,11 +58,11 @@ export const ProfileCss = StyleSheet.create({
   titleText: {
     fontFamily: 'Mukta-SemiBold',
     fontSize: moderateScale(17),
-    color: colorEleven,
+    color: colorFifteen,
   },
   valueText: {
     fontFamily: 'Mukta-Bold',
     fontSize: moderateScale(17),
-    color: colorFifteen,
+    color: colorThirteen,
   },
 });

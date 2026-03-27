@@ -32,10 +32,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: moderateScale(18),
-    marginVertical: verticalScale(12),
+    marginVertical: verticalScale(6),
     borderColor: colorEleven,
     borderWidth: moderateScale(1),
-    elevation: moderateScale(12),
+    elevation: moderateScale(12)
   },
   headerText: {
     fontFamily: 'Mukta-Bold',
