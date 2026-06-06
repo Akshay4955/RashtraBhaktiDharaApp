@@ -28,10 +28,10 @@ export const ScreenNames = {
   MoreTab: 'अधिक माहिती',
   ContactUs: 'संपर्क साधा',
   Gite: 'गीते',
+  Parayan: 'श्री शिवचरित्र पारायण',
 };
 
 export const Texts = {
   mohimPeriod: 'मोहिम कालावधी: ',
   mohimPath: 'गडकोट मोहिम: ',
-  Parayan: 'श्री शिवचरित्र पारायण',
 };
