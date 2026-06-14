@@ -9,8 +9,8 @@ import {
   View,
 } from 'react-native';
 import {useFirebaseData} from '../../navigation/FirebaseProvider';
-import {formatData} from '../../utils/commonUtils';
 import {
+  colorEleven,
   colorFifteen,
   colorFour,
   colorNine,
@@ -117,9 +117,48 @@ const Parayan = () => {
               <Text style={styles.fullDateText}>{reading?.date}</Text>
               <Text style={styles.chapterTitle}>{reading?.title}</Text>
               <View style={styles.divider} />
-              <Text style={styles.contentText}>
-                {formatData(reading?.data)}
-              </Text>
+
+              {/* Render each shloka */}
+              {reading?.shlokas &&
+              Array.isArray(reading.shlokas) &&
+              reading.shlokas.length > 0 ? (
+                reading.shlokas.map((shloka, shlokaIndex) => (
+                  <View key={shlokaIndex} style={styles.sectionContainer}>
+                    {/* Sanskrit Shlok */}
+                    {shloka?.sanskrit && (
+                      <Text style={styles.shlokText}>{shloka.sanskrit}</Text>
+                    )}
+
+                    {/* Word Meanings */}
+                    {shloka?.wordMeanings && shloka.wordMeanings.length > 0 && (
+                      <View style={styles.meaningContainer}>
+                        <Text style={styles.sectionHeading}>शब्दार्थ:</Text>
+                        {shloka.wordMeanings.map((meaning, meaningIndex) => (
+                          <View key={meaningIndex} style={styles.meaningRow}>
+                            <Text style={styles.wordText}>{meaning.word}:</Text>
+                            <Text style={styles.meaningText}>
+                              {' '}
+                              {meaning.meaning}
+                            </Text>
+                          </View>
+                        ))}
+                      </View>
+                    )}
+
+                    {/* Brief Meaning */}
+                    {shloka?.briefMeaning && (
+                      <View style={styles.bookMeaningContainer}>
+                        <Text style={styles.sectionHeading}>अर्थ:</Text>
+                        <Text style={styles.contentText}>
+                          {shloka.briefMeaning}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                ))
+              ) : (
+                <Text style={styles.contentText}>आजचे पारायण उपलब्ध नाही</Text>
+              )}
             </ScrollView>
           </View>
         ))}
@@ -213,8 +252,49 @@ const styles = StyleSheet.create({
   contentText: {
     color: textColor,
     textAlign: 'justify',
-    fontFamily: 'Mukta-SemiBold',
+    fontFamily: 'Mukta-Medium',
     fontSize: moderateScale(19),
+    lineHeight: moderateScale(28),
+  },
+  sectionContainer: {
+    marginBottom: verticalScale(24),
+  },
+  shlokText: {
+    color: colorThirteen,
+    fontSize: moderateScale(20),
+    fontFamily: 'Mukta-Bold',
+    textAlign: 'center',
+    lineHeight: moderateScale(32),
+    marginBottom: verticalScale(16),
+  },
+  meaningContainer: {
+    marginBottom: verticalScale(12),
+  },
+  sectionHeading: {
+    color: colorTwelve,
+    fontSize: moderateScale(18),
+    fontFamily: 'Mukta-Bold',
+    marginBottom: verticalScale(8),
+    marginTop: verticalScale(8),
+  },
+  meaningRow: {
+    flexDirection: 'row',
+    marginBottom: verticalScale(6),
+    paddingLeft: horizontalScale(8),
+  },
+  wordText: {
+    color: colorEleven,
+    fontSize: moderateScale(16),
+    fontFamily: 'Mukta-Bold',
+  },
+  meaningText: {
+    color: textColor,
+    fontSize: moderateScale(16),
+    fontFamily: 'Mukta-Medium',
+    flex: 1,
+  },
+  bookMeaningContainer: {
+    marginBottom: verticalScale(12),
   },
   indicatorContainer: {
     flexDirection: 'row',
