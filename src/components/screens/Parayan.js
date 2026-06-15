@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {
   Dimensions,
   SafeAreaView,
@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import remoteConfig from '@react-native-firebase/remote-config';
+import {useAuth} from '../../navigation/AuthenticationProvider';
 import {useFirebaseData} from '../../navigation/FirebaseProvider';
 import {
   colorEleven,
@@ -36,41 +38,77 @@ const {width: SCREEN_WIDTH} = Dimensions.get('window');
 const Parayan = () => {
   const scrollViewRef = useRef();
   const {firebaseData} = useFirebaseData();
+  const {user} = useAuth();
   const ParayanData = firebaseData?.Shivcharitraparayan;
+
+  // Fetch admin emails from Remote Config
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const checkAdminStatus = () => {
+      try {
+        // Get admin emails from Remote Config
+        // Expected format in Firebase Console: ["email1@example.com", "email2@example.com"]
+        const adminEmailsString = remoteConfig().getValue('admin_emails').asString();
+        
+        if (adminEmailsString) {
+          const adminEmails = JSON.parse(adminEmailsString);
+          
+          // Check if current user's email is in admin list
+          if (Array.isArray(adminEmails) && user?.email) {
+            setIsAdmin(adminEmails.includes(user.email));
+          }
+        }
+      } catch (error) {
+        console.error('Error checking admin status:', error);
+        setIsAdmin(false);
+      }
+    };
+
+    checkAdminStatus();
+  }, [user?.email]);
 
   const fetchLastThreeDaysData = () => {
     const today = new Date();
-    const todayNum = today.getDate();
-    const dayKeys = [];
-
-    for (let i = 5; i >= 0; i--) {
-      let dayNum = todayNum - i;
-      if (dayNum <= 0) dayNum += 31;
-      dayKeys.push(dayNum);
-    }
     const result = [];
-    dayKeys.forEach(key => {
-      result[key] = ParayanData[key] || '';
-    });
-    const filteredResult = [];
-    for (let i = 5; filteredResult.length < 3; i--) {
-      const entry = ParayanData[dayKeys[i]];
-      if (entry?.date) filteredResult.push(entry);
+
+    if (isAdmin) {
+      // Admin: Show all 31 days for verification
+      for (let day = 1; day <= 31; day++) {
+        const entry = ParayanData?.[day];
+        if (entry?.date) {
+          result.push(entry);
+        }
+      }
+    } else {
+      // Regular users: Show only last 3 days (today + previous 2)
+      for (let i = 2; i >= 0; i--) {
+        const targetDate = new Date(today);
+        targetDate.setDate(today.getDate() - i);
+        const dayNum = targetDate.getDate();
+
+        const entry = ParayanData?.[dayNum];
+        if (entry?.date) {
+          result.push(entry);
+        }
+      }
     }
-    return filteredResult.reverse();
+
+    return result;
   };
 
   const readingsData = fetchLastThreeDaysData();
   const initialPage = readingsData.length > 0 ? readingsData.length - 1 : 0;
   const [currentPage, setCurrentPage] = useState(initialPage);
-  React.useEffect(() => {
+  
+  useEffect(() => {
     if (scrollViewRef.current) {
       scrollViewRef.current.scrollTo({
         x: initialPage * SCREEN_WIDTH,
         animated: false,
       });
     }
-  }, [initialPage]);
+  }, [initialPage, readingsData.length]); // Update when data changes
 
   const handleScroll = event => {
     const offsetX = event.nativeEvent.contentOffset.x;

@@ -120,11 +120,11 @@ const DrawerNavigator = () => {
         component={GadkotMohima}
         options={screenOptions}
       />
-      {/* <Drawer.Screen
+      <Drawer.Screen
         name={ScreenNames.Books}
         component={BooksList}
         options={screenOptions}
-      /> */}
+      />
       <Drawer.Screen
         name={ScreenNames.Profile}
         component={Profile}
