@@ -1,11 +1,13 @@
-import notifee, {AuthorizationStatus} from '@notifee/react-native';
+import notifee, {AuthorizationStatus, EventType} from '@notifee/react-native';
 import messaging from '@react-native-firebase/messaging';
 import remoteConfig from '@react-native-firebase/remote-config';
 import React, {useEffect} from 'react';
 import {AppState} from 'react-native';
 import Index from './navigation/Index';
+import {navigationRef} from './navigation/Routes';
 import {setupTrackPlayer} from './services/audioPlayerService';
 import Logger from './utils/logUtility/Logger';
+import {handleNotificationNavigation} from './utils/notificationNavigationService';
 
 const App = () => {
   const fetchRemoteConfig = async () => {
@@ -127,18 +129,42 @@ const App = () => {
             title:
               remoteMessage.notification?.title ?? remoteMessage.data?.title,
             body: remoteMessage.notification?.body ?? remoteMessage.data?.body,
+            data: remoteMessage.data, // Pass data to local notification
             android: {
               channelId: 'default',
-              pressAction: {id: 'default'},
+              pressAction: {
+                id: 'default',
+                launchActivity: 'default',
+              },
             },
           });
+        },
+      );
+
+      // Handle foreground notification press
+      const unsubscribeForegroundEvent = notifee.onForegroundEvent(
+        ({type, detail}) => {
+          if (type === EventType.PRESS) {
+            Logger.log('Foreground notification pressed', detail);
+            // Reconstruct remoteMessage format from notification data
+            const remoteMessage = {
+              data: detail.notification?.data || {},
+            };
+            // Wait a moment for navigation to be ready
+            setTimeout(() => {
+              handleNotificationNavigation(remoteMessage, navigationRef);
+            }, 500);
+          }
         },
       );
 
       // When the app is opened from a notification (background)
       messaging().onNotificationOpenedApp(remoteMessage => {
         Logger.log('onNotificationOpenedApp', remoteMessage);
-        // handle navigation using remoteMessage.data
+        // Wait for navigation to be ready, then navigate
+        setTimeout(() => {
+          handleNotificationNavigation(remoteMessage, navigationRef);
+        }, 1000);
       });
 
       // If the app was opened from quit state by a notification
@@ -146,13 +172,17 @@ const App = () => {
         .getInitialNotification()
         .then(remoteMessage => {
           if (remoteMessage) {
-            console.log('getInitialNotification', remoteMessage);
-            // handle navigation
+            Logger.log('getInitialNotification', remoteMessage);
+            // Wait for app initialization and navigation ready
+            setTimeout(() => {
+              handleNotificationNavigation(remoteMessage, navigationRef);
+            }, 2000);
           }
         });
 
       return () => {
         unsubscribeOnMessage();
+        unsubscribeForegroundEvent();
       };
     }
 
