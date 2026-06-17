@@ -27,12 +27,15 @@ import {MainPageCss as styles} from '../../../styles/screens/MainPageCss';
 import {formatData} from '../../../utils/commonUtils';
 import {moderateScale} from '../../../utils/constants/Metrics';
 import {
+  Headers,
   JayatuHinduRashtram,
+  ScreenNames,
   ShriShivPratishthan,
   Slogan,
 } from '../../../utils/constants/TextConstants';
 import {textColor} from '../../../utils/constants/color';
 import Logger from '../../../utils/logUtility/Logger';
+import ListHeader from '../../common/ListHeader';
 import PermissionModal from '../../common/PermissionModal';
 import UpdateModal from '../../common/UpdateModal';
 import CustomAnimatedCarousel from '../CustomAnimatedCarousel';
@@ -137,6 +140,11 @@ const MainPage = () => {
           renderItem={renderItem}
         />
       ) : null}
+      <TouchableOpacity
+        onPress={() => navigation.navigate(ScreenNames.Parayan)}
+        activeOpacity={0.8}>
+        <ListHeader header={Headers.Parayan} />
+      </TouchableOpacity>
     </>
   ));
 

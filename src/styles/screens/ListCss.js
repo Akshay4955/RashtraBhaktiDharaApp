@@ -21,7 +21,7 @@ export const ListCss = StyleSheet.create({
     borderRadius: moderateScale(28),
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: verticalScale(6),
+    margin: moderateScale(6),
   },
   listViewAudio: {
     padding: moderateScale(8),
@@ -38,7 +38,6 @@ export const ListCss = StyleSheet.create({
     fontFamily: 'Mukta-Bold',
     fontSize: moderateScale(20),
     color: textColor,
-    // marginHorizontal: horizontalScale(6),
   },
   footer: {
     marginVertical: verticalScale(6),
@@ -53,4 +52,15 @@ export const ListCss = StyleSheet.create({
     color: textColor,
     fontSize: moderateScale(16),
   },
+  bookListView: {
+    padding: moderateScale(12),
+    margin: moderateScale(6),
+    paddingVertical: verticalScale(14),
+    borderWidth: verticalScale(1),
+    borderColor: colorEleven,
+    borderRadius: moderateScale(28),
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  bookListTextView: {flex: 1, marginHorizontal: moderateScale(10)},
 });

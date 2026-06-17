@@ -1,9 +1,15 @@
 import auth from '@react-native-firebase/auth';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  createNavigationContainerRef,
+} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {Login} from '../components/screens';
 import {useAuth} from './AuthenticationProvider';
 import StackNavigator from './StackNavigator';
+
+// Create navigation reference for accessing navigation outside of React components
+export const navigationRef = createNavigationContainerRef();
 
 const Routes = () => {
   const [initializing, setInitializing] = useState(true);
@@ -21,7 +27,7 @@ const Routes = () => {
 
   if (initializing) return null;
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       {user ? <StackNavigator /> : <Login />}
     </NavigationContainer>
   );

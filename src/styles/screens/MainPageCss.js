@@ -84,7 +84,7 @@ export const MainPageCss = StyleSheet.create({
   },
   bannerImage: {
     width: horizontalScale(360),
-    height: verticalScale(280),
+    height: verticalScale(240),
     borderRadius: moderateScale(10),
     borderColor: colorNine,
     borderWidth: moderateScale(2),

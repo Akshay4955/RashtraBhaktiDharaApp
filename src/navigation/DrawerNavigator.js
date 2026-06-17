@@ -13,10 +13,11 @@ import {
   View,
 } from 'react-native';
 import {PadyaList, Profile, ShlokList} from '../components/screens';
+import BooksList from '../components/screens/BookList';
 import ChhandList from '../components/screens/ChhandList';
 import ContactUs from '../components/screens/ContactUs';
 import GadkotMohima from '../components/screens/GadkotMohima';
-import GiteList from '../components/screens/GiteList';
+import Parayan from '../components/screens/Parayan';
 import {
   colorEight,
   colorEleven,
@@ -105,8 +106,8 @@ const DrawerNavigator = () => {
         options={screenOptions}
       />
       <Drawer.Screen
-        name={ScreenNames.Gite}
-        component={GiteList}
+        name={ScreenNames.Parayan}
+        component={Parayan}
         options={screenOptions}
       />
       <Drawer.Screen
@@ -117,6 +118,11 @@ const DrawerNavigator = () => {
       <Drawer.Screen
         name={ScreenNames.GadkotMohima}
         component={GadkotMohima}
+        options={screenOptions}
+      />
+      <Drawer.Screen
+        name={ScreenNames.Books}
+        component={BooksList}
         options={screenOptions}
       />
       <Drawer.Screen

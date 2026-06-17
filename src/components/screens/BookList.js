@@ -1,16 +1,15 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import {
   ActivityIndicator,
   FlatList,
+  Linking,
   SafeAreaView,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {useFirebaseData} from '../../navigation/FirebaseProvider';
 import {ListCss as styles} from '../../styles/screens/ListCss';
 import {colorNine, colorThree, textColor} from '../../utils/constants/color';
@@ -18,49 +17,40 @@ import {moderateScale} from '../../utils/constants/Metrics';
 import {Headers} from '../../utils/constants/TextConstants';
 import ListHeader from '../common/ListHeader';
 
-const GiteList = () => {
-  const navigation = useNavigation();
-  const {firebaseData} = useFirebaseData();
-  const data = firebaseData?.Gite;
-  const [searchQuery, setSearchQuery] = useState('');
+const BooksList = () => {
   const flatListRef = useRef(null);
+  const {firebaseData} = useFirebaseData();
+  const BooksData = firebaseData?.Books || [];
 
-  useEffect(() => {
-    if (searchQuery) {
-      scrollToMatchingIndex();
-    }
-  }, [searchQuery]);
-
-  const scrollToMatchingIndex = () => {
-    const index = data?.findIndex(item =>
-      item.title.toLowerCase().includes(searchQuery.toLowerCase()),
-    );
-    if (index !== -1 && flatListRef.current) {
-      flatListRef.current.scrollToIndex({animated: true, index});
+  const handleDownload = downloadURL => {
+    if (typeof downloadURL === 'string' && downloadURL.trim() !== '') {
+      Linking.openURL(`googlechrome://navigate?url=${downloadURL}`);
     }
   };
 
   const renderItem = ({item}) => {
     return (
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Poem', {poem: item})}>
+      <TouchableOpacity onPress={() => {}}>
         <LinearGradient
-          style={styles.listView}
+          style={styles.bookListView}
           colors={[colorThree, colorNine]}
           start={{x: 0, y: 0}}
           end={{x: 1, y: 0}}>
-          <Text style={styles.listText}>{item?.title}</Text>
-          {item?.audio ? (
+          <Icon name={'book'} size={moderateScale(36)} color={textColor} />
+          <View style={styles.bookListTextView}>
+            <Text style={[styles.listText, {fontSize: moderateScale(16)}]}>
+              {item?.title}
+            </Text>
+            <Text style={[styles.listText, {fontSize: moderateScale(14)}]}>
+              - {item?.author}
+            </Text>
+          </View>
+          {item?.link ? (
             <Icon
-              name={'play-circle-sharp'}
+              name={'download'}
               size={moderateScale(36)}
               color={textColor}
-              onPress={() =>
-                navigation.navigate('Audio', {
-                  url: item?.audio,
-                  title: item?.title,
-                })
-              }
+              onPress={() => handleDownload(item?.link)}
             />
           ) : null}
         </LinearGradient>
@@ -70,18 +60,11 @@ const GiteList = () => {
 
   return (
     <SafeAreaView style={styles.mainView}>
-      <ListHeader header={Headers.Gite} />
-      <TextInput
-        style={styles.searchInput}
-        placeholder="शोधा...!!!"
-        placeholderTextColor={textColor}
-        value={searchQuery}
-        onChangeText={text => setSearchQuery(text)}
-      />
-      {data?.length > 0 ? (
+      <ListHeader header={Headers.Books} />
+      {BooksData?.length > 0 ? (
         <FlatList
           ref={flatListRef}
-          data={data}
+          data={BooksData}
           keyExtractor={item => item?.title}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
@@ -100,4 +83,4 @@ const GiteList = () => {
   );
 };
 
-export default GiteList;
+export default BooksList;

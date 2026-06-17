@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {View} from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import {
@@ -44,19 +44,22 @@ const CustomAnimatedCarousel = props => {
   const {focused, isModalVisible, data, renderItem} = props;
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handleProgressChange = (_, absoluteProgress) => {
+  const handleProgressChange = useCallback((_, absoluteProgress) => {
     const roundedIndex = Math.round(absoluteProgress);
-    if (roundedIndex !== currentIndex) {
-      setCurrentIndex(roundedIndex);
-    }
-  };
+    setCurrentIndex(prevIndex => {
+      if (roundedIndex !== prevIndex) {
+        return roundedIndex;
+      }
+      return prevIndex;
+    });
+  }, []);
 
-  const MemoizedCarousel = React.useMemo(() => {
+  const carouselElement = useMemo(() => {
     return (
       <Carousel
         loop
         width={horizontalScale(380)}
-        height={verticalScale(280)}
+        height={verticalScale(240)}
         autoPlay={focused && !isModalVisible}
         data={data?.images}
         scrollAnimationDuration={3000}
@@ -65,11 +68,11 @@ const CustomAnimatedCarousel = props => {
         onProgressChange={handleProgressChange}
       />
     );
-  }, [data, renderItem, focused]);
+  }, [data?.images, renderItem, focused, isModalVisible, handleProgressChange]);
 
   return (
     <>
-      {MemoizedCarousel}
+      {carouselElement}
       <Dots currentIndex={currentIndex} carouselData={data?.images} />
     </>
   );

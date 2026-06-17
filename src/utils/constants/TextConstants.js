@@ -14,6 +14,8 @@ export const Headers = {
   BhushanChhand: 'कवी भूषण छंद',
   GadkotMohima: '|| धारातीर्थ यात्रा ||',
   Gite: '|| गीते ||',
+  Parayan: 'श्री शिवचरित्र पारायण',
+  Books: 'ऐतिहासिक संदर्भ ग्रंथ',
 };
 export const ScreenNames = {
   MainPage: 'मुख्य पृष्ठ',
@@ -27,6 +29,9 @@ export const ScreenNames = {
   MoreTab: 'अधिक माहिती',
   ContactUs: 'संपर्क साधा',
   Gite: 'गीते',
+  Parayan: 'श्री शिवचरित्र पारायण',
+  Books: 'ऐतिहासिक संदर्भ ग्रंथ',
+
 };
 
 export const Texts = {
