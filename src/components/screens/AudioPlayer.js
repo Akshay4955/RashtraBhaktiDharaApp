@@ -19,6 +19,7 @@ import TrackPlayer, {
 } from 'react-native-track-player';
 import Icon from 'react-native-vector-icons/Ionicons';
 import images from '../../assets/images';
+import {setupTrackPlayer} from '../../services/audioPlayerService';
 import {
   colorEleven,
   colorFifteen,
@@ -72,6 +73,7 @@ const AudioPlayer = ({route}) => {
 
   const setupAudio = async () => {
     try {
+      await setupTrackPlayer();
       await TrackPlayer.reset();
       await TrackPlayer.add({
         id: '1',

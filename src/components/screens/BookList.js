@@ -15,6 +15,7 @@ import {ListCss as styles} from '../../styles/screens/ListCss';
 import {colorNine, colorThree, textColor} from '../../utils/constants/color';
 import {moderateScale} from '../../utils/constants/Metrics';
 import {Headers} from '../../utils/constants/TextConstants';
+import CustomBannerAd from '../common/CustomBannerAd';
 import ListHeader from '../common/ListHeader';
 
 const BooksList = () => {
@@ -79,6 +80,7 @@ const BooksList = () => {
       ) : (
         <ActivityIndicator size={'large'} color={colorNine} />
       )}
+      <CustomBannerAd />
     </SafeAreaView>
   );
 };
