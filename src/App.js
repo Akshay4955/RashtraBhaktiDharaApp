@@ -5,7 +5,6 @@ import React, {useEffect} from 'react';
 import {AppState} from 'react-native';
 import Index from './navigation/Index';
 import {navigationRef} from './navigation/Routes';
-import {setupTrackPlayer} from './services/audioPlayerService';
 import Logger from './utils/logUtility/Logger';
 import {handleNotificationNavigation} from './utils/notificationNavigationService';
 
@@ -53,16 +52,6 @@ const App = () => {
     let remoteConfigUnsubscriber = null;
     let currentAppState = AppState.currentState;
 
-    // Initialize TrackPlayer and request permissions at app level
-    const initializeApp = async () => {
-      try {
-        await setupTrackPlayer();
-        Logger.log('App and TrackPlayer initialization complete');
-      } catch (error) {
-        Logger.error('App initialization failed:', error);
-      }
-    };
-
     const handleAppStateChange = nextAppState => {
       if (
         currentAppState.match(/active/) &&
@@ -82,7 +71,6 @@ const App = () => {
       currentAppState = nextAppState;
     };
 
-    initializeApp();
     fetchRemoteConfig();
     remoteConfigUnsubscriber = subscribeToRemoteConfigUpdates();
     appStateListener = AppState.addEventListener(
@@ -98,6 +86,22 @@ const App = () => {
         appStateListener.remove();
       }
     };
+  }, []);
+
+  useEffect(() => {
+    async function checkInitialNotifeeNotification() {
+      const initialNotification = await notifee.getInitialNotification();
+      if (initialNotification) {
+        Logger.log('App opened via notifee notification', initialNotification);
+        const remoteMessage = {
+          data: initialNotification.notification?.data || {},
+        };
+        setTimeout(() => {
+          handleNotificationNavigation(remoteMessage, navigationRef);
+        }, 1500); // give navigation time to mount
+      }
+    }
+    checkInitialNotifeeNotification();
   }, []);
 
   useEffect(() => {
