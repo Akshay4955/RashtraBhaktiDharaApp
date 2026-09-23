@@ -5,6 +5,10 @@ import React, {useEffect} from 'react';
 import {AppState} from 'react-native';
 import Index from './navigation/Index';
 import {navigationRef} from './navigation/Routes';
+import {
+  notifyRemoteConfigActivated,
+  REMOTE_CONFIG_DEFAULTS,
+} from './services/remoteConfigService';
 import Logger from './utils/logUtility/Logger';
 import {handleNotificationNavigation} from './utils/notificationNavigationService';
 
@@ -12,11 +16,10 @@ const App = () => {
   const fetchRemoteConfig = async () => {
     try {
       await remoteConfig()
-        .setDefaults({
-          version_code: 17,
-        })
+        .setDefaults(REMOTE_CONFIG_DEFAULTS)
         .then(() => remoteConfig().fetchAndActivate())
         .then(fetchedRemotely => {
+          notifyRemoteConfigActivated();
           if (fetchedRemotely) {
             Logger.log(
               'Configs were retrieved from the backend and activated.',
@@ -40,6 +43,7 @@ const App = () => {
         } else {
           Logger.log('Remote Config updated keys:', event.updatedKeys);
           await remoteConfig().activate();
+          notifyRemoteConfigActivated();
           Logger.log('Remote Config activated from real-time update!');
         }
       },

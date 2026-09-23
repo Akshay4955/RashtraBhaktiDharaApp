@@ -17,13 +17,17 @@ import {
   colorThree,
   textColor,
 } from '../../utils/constants/color';
+import useInterstitialOnLeave from '../../utils/useInterstitialOnLeave';
 import CustomBannerAd from '../common/CustomBannerAd';
+import InlineBannerAd from '../common/InlineBannerAd';
 import PoemHeader from './PoemHeader';
 
 const Poem = ({route}) => {
   const {poem} = route?.params;
   const data = formatData(poem?.content);
   const navigation = useNavigation();
+
+  useInterstitialOnLeave();
 
   return (
     <LinearGradient
@@ -39,7 +43,10 @@ const Poem = ({route}) => {
       <PoemHeader header={poem?.title} />
       <ScrollView showsVerticalScrollIndicator={false}>
         {poem ? (
-          <Text style={styles.contentText}>{data}</Text>
+          <>
+            <Text style={styles.contentText}>{data}</Text>
+            <InlineBannerAd />
+          </>
         ) : (
           <ActivityIndicator size={'large'} color={colorOne} />
         )}

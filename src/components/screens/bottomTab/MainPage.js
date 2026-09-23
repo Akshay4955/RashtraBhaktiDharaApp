@@ -19,6 +19,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import images from '../../../assets/images';
 import {useFirebaseData} from '../../../navigation/FirebaseProvider';
 import {checkUpdateAvailability} from '../../../services/appUpdateService';
+import {RemoteConfigKeys} from '../../../services/remoteConfigService';
 import {
   checkNotificationPermission,
   requestNotificationPermission,
@@ -35,6 +36,7 @@ import {
 } from '../../../utils/constants/TextConstants';
 import {textColor} from '../../../utils/constants/color';
 import Logger from '../../../utils/logUtility/Logger';
+import useRemoteConfigBoolean from '../../../utils/useRemoteConfigBoolean';
 import ListHeader from '../../common/ListHeader';
 import PermissionModal from '../../common/PermissionModal';
 import UpdateModal from '../../common/UpdateModal';
@@ -55,6 +57,7 @@ const MainPage = () => {
   const [updateAvailable, setUpdateAvailable] = useState(false);
   const [updateModalVisible, setUpdateModalVisible] = useState(false);
   const [showPermissionModal, setShowPermissionModal] = useState(false);
+  const showParayan = useRemoteConfigBoolean(RemoteConfigKeys.SHOW_PARAYAN);
 
   useEffect(() => {
     const init = async () => {
@@ -140,11 +143,13 @@ const MainPage = () => {
           renderItem={renderItem}
         />
       ) : null}
-      <TouchableOpacity
-        onPress={() => navigation.navigate(ScreenNames.Parayan)}
-        activeOpacity={0.8}>
-        <ListHeader header={Headers.Parayan} />
-      </TouchableOpacity>
+      {showParayan ? (
+        <TouchableOpacity
+          onPress={() => navigation.navigate(ScreenNames.Parayan)}
+          activeOpacity={0.8}>
+          <ListHeader header={Headers.Parayan} />
+        </TouchableOpacity>
+      ) : null}
     </>
   ));
 

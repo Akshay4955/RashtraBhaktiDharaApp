@@ -16,6 +16,7 @@ import {colorNine, colorThree, textColor} from '../../utils/constants/color';
 import {moderateScale} from '../../utils/constants/Metrics';
 import {Headers} from '../../utils/constants/TextConstants';
 import CustomBannerAd from '../common/CustomBannerAd';
+import InlineBannerAd, {isInlineAdSlot} from '../common/InlineBannerAd';
 import ListHeader from '../common/ListHeader';
 
 const BooksList = () => {
@@ -29,33 +30,36 @@ const BooksList = () => {
     }
   };
 
-  const renderItem = ({item}) => {
+  const renderItem = ({item, index}) => {
     return (
-      <TouchableOpacity onPress={() => {}}>
-        <LinearGradient
-          style={styles.bookListView}
-          colors={[colorThree, colorNine]}
-          start={{x: 0, y: 0}}
-          end={{x: 1, y: 0}}>
-          <Icon name={'book'} size={moderateScale(36)} color={textColor} />
-          <View style={styles.bookListTextView}>
-            <Text style={[styles.listText, {fontSize: moderateScale(16)}]}>
-              {item?.title}
-            </Text>
-            <Text style={[styles.listText, {fontSize: moderateScale(14)}]}>
-              - {item?.author}
-            </Text>
-          </View>
-          {item?.link ? (
-            <Icon
-              name={'download'}
-              size={moderateScale(36)}
-              color={textColor}
-              onPress={() => handleDownload(item?.link)}
-            />
-          ) : null}
-        </LinearGradient>
-      </TouchableOpacity>
+      <>
+        <TouchableOpacity onPress={() => {}}>
+          <LinearGradient
+            style={styles.bookListView}
+            colors={[colorThree, colorNine]}
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 0}}>
+            <Icon name={'book'} size={moderateScale(36)} color={textColor} />
+            <View style={styles.bookListTextView}>
+              <Text style={[styles.listText, {fontSize: moderateScale(16)}]}>
+                {item?.title}
+              </Text>
+              <Text style={[styles.listText, {fontSize: moderateScale(14)}]}>
+                - {item?.author}
+              </Text>
+            </View>
+            {item?.link ? (
+              <Icon
+                name={'download'}
+                size={moderateScale(36)}
+                color={textColor}
+                onPress={() => handleDownload(item?.link)}
+              />
+            ) : null}
+          </LinearGradient>
+        </TouchableOpacity>
+        {isInlineAdSlot(index, BooksData.length) ? <InlineBannerAd /> : null}
+      </>
     );
   };
 

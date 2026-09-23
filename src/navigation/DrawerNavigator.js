@@ -18,6 +18,7 @@ import ChhandList from '../components/screens/ChhandList';
 import ContactUs from '../components/screens/ContactUs';
 import GadkotMohima from '../components/screens/GadkotMohima';
 import Parayan from '../components/screens/Parayan';
+import {RemoteConfigKeys} from '../services/remoteConfigService';
 import {
   colorEight,
   colorEleven,
@@ -32,6 +33,7 @@ import {
   verticalScale,
 } from '../utils/constants/Metrics';
 import {HeaderTitle, ScreenNames} from '../utils/constants/TextConstants';
+import useRemoteConfigBoolean from '../utils/useRemoteConfigBoolean';
 import BottomTabNavigationManager from './BottomTabNavigationManager';
 
 const Drawer = createDrawerNavigator();
@@ -62,6 +64,7 @@ const CustomDrawerContent = props => {
 };
 
 const DrawerNavigator = () => {
+  const showParayan = useRemoteConfigBoolean(RemoteConfigKeys.SHOW_PARAYAN);
   const screenOptions = () => ({
     headerTitle: HeaderTitle,
     headerTitleStyle: {
@@ -105,11 +108,13 @@ const DrawerNavigator = () => {
         component={ShlokList}
         options={screenOptions}
       />
-      <Drawer.Screen
-        name={ScreenNames.Parayan}
-        component={Parayan}
-        options={screenOptions}
-      />
+      {showParayan ? (
+        <Drawer.Screen
+          name={ScreenNames.Parayan}
+          component={Parayan}
+          options={screenOptions}
+        />
+      ) : null}
       <Drawer.Screen
         name={ScreenNames.BhushanChhand}
         component={ChhandList}

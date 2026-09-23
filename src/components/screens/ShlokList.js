@@ -15,6 +15,7 @@ import {colorNine, colorThree, textColor} from '../../utils/constants/color';
 import {moderateScale} from '../../utils/constants/Metrics';
 import {Headers} from '../../utils/constants/TextConstants';
 import CustomBannerAd from '../common/CustomBannerAd';
+import InlineBannerAd, {isInlineAdSlot} from '../common/InlineBannerAd';
 import ListHeader from '../common/ListHeader';
 
 const ShlokList = () => {
@@ -22,7 +23,7 @@ const ShlokList = () => {
   const {firebaseData} = useFirebaseData();
   const data = firebaseData?.Shlok;
 
-  const renderItem = ({item}) => {
+  const renderItem = ({item, index}) => {
     return (
       <>
         <TouchableOpacity
@@ -48,6 +49,7 @@ const ShlokList = () => {
             ) : null}
           </LinearGradient>
         </TouchableOpacity>
+        {isInlineAdSlot(index, data.length) ? <InlineBannerAd /> : null}
       </>
     );
   };

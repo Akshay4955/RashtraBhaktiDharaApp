@@ -9,7 +9,7 @@ const RETRY_DELAYS = [15000, 30000, 60000, 120000];
 
 // Module-level constant — avoids passing a new object reference to the
 // native bridge on every render.
-const REQUEST_OPTIONS = {
+export const REQUEST_OPTIONS = {
   requestNonPersonalizedAdsOnly: false,
   keywords: [
     'bhakti',
@@ -35,9 +35,7 @@ let instanceCounter = 0;
  *
  * This intentionally does NOT throttle/block the initial mount-triggered
  * request — per-screen mounting is the main lever for total impression
- * count across a navigation-heavy app. Match rate / fill rate is instead
- * addressed at the AdMob Mediation layer (see mediation setup), not by
- * suppressing requests here.
+ * count across a navigation-heavy app.
  */
 const CustomBannerAd = () => {
   const instanceIdRef = useRef(++instanceCounter);
