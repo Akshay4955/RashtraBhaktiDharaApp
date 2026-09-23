@@ -37,6 +37,7 @@ import {
   windowWidth,
 } from '../../utils/constants/Metrics';
 import Logger from '../../utils/logUtility/Logger';
+import useInterstitialOnLeave from '../../utils/useInterstitialOnLeave';
 import useNetInfoStatus from '../../utils/useNetInfoStatus';
 import CustomBannerAd from '../common/CustomBannerAd';
 import NoInternet from './NoInternet';
@@ -49,6 +50,10 @@ const AudioPlayer = ({route}) => {
   const isFocused = useIsFocused();
   const [isPlaying, setIsPlaying] = useState(false);
   const isConnected = useNetInfoStatus();
+
+  // Audio is stopped in cleanupAudio when this screen closes, so the ad
+  // never plays over it.
+  useInterstitialOnLeave();
 
   useEffect(() => {
     // Only setup audio when screen is focused (prevents service start during navigation)

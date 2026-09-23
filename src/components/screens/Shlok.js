@@ -22,7 +22,9 @@ import {
   textColor,
 } from '../../utils/constants/color';
 import Logger from '../../utils/logUtility/Logger';
+import useInterstitialOnLeave from '../../utils/useInterstitialOnLeave';
 import CustomBannerAd from '../common/CustomBannerAd';
+import InlineBannerAd from '../common/InlineBannerAd';
 import PoemHeader from './PoemHeader';
 
 const Shlok = ({route}) => {
@@ -36,6 +38,8 @@ const Shlok = ({route}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const sectionListRef = useRef();
+
+  useInterstitialOnLeave();
 
   const stanzas = useMemo(() => {
     const formattedContent = formatData(poem.content);
@@ -193,6 +197,9 @@ const Shlok = ({route}) => {
           <HighlightedText line={item} query={searchQuery} />
         )}
         ItemSeparatorComponent={() => <View style={styles.stanzaSpacing} />}
+        // Footer rather than between stanzas, so getItemLayout offsets used
+        // by search-scroll stay valid.
+        ListFooterComponent={<InlineBannerAd />}
         showsVerticalScrollIndicator={false}
         initialNumToRender={4}
         maxToRenderPerBatch={2}

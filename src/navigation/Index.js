@@ -1,6 +1,7 @@
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import React, {useEffect} from 'react';
 import {MobileAds} from 'react-native-google-mobile-ads';
+import {initInterstitial} from '../services/interstitialAdService';
 import Logger from '../utils/logUtility/Logger';
 import {AuthenticationProvider} from './AuthenticationProvider';
 import Routes from './Routes';
@@ -17,6 +18,7 @@ const Index = () => {
       .initialize()
       .then(adapterStatuses => {
         Logger.log('google ads initialized', adapterStatuses);
+        initInterstitial();
       });
   }, []);
   return (

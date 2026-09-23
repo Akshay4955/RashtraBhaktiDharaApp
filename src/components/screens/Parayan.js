@@ -31,9 +31,13 @@ import {
 } from '../../utils/constants/Metrics';
 import {Headers} from '../../utils/constants/TextConstants';
 import CustomBannerAd from '../common/CustomBannerAd';
+import InlineBannerAd, {isInlineAdSlot} from '../common/InlineBannerAd';
 import ListHeader from '../common/ListHeader';
 
 const {width: SCREEN_WIDTH} = Dimensions.get('window');
+
+// Each shloka block (text + word meanings + meaning) is long.
+const PARAYAN_AD_INTERVAL = 3;
 
 const Parayan = () => {
   const scrollViewRef = useRef();
@@ -192,6 +196,17 @@ const Parayan = () => {
                         </Text>
                       </View>
                     )}
+
+                    {/* Only the visible page loads inline ads — the pager
+                        keeps all pages mounted. */}
+                    {currentPage === index &&
+                    isInlineAdSlot(
+                      shlokaIndex,
+                      reading.shlokas.length,
+                      PARAYAN_AD_INTERVAL,
+                    ) ? (
+                      <InlineBannerAd />
+                    ) : null}
                   </View>
                 ))
               ) : (

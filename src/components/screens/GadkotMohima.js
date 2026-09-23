@@ -11,7 +11,11 @@ import {
 import {moderateScale, verticalScale} from '../../utils/constants/Metrics';
 import {Headers, Texts} from '../../utils/constants/TextConstants';
 import CustomBannerAd from '../common/CustomBannerAd';
+import InlineBannerAd, {isInlineAdSlot} from '../common/InlineBannerAd';
 import ListHeader from '../common/ListHeader';
+
+// Cards here are taller than regular list rows, so ads appear more often.
+const GADKOT_AD_INTERVAL = 3;
 
 const GadkotMohima = () => {
   const {firebaseData} = useFirebaseData();
@@ -19,20 +23,25 @@ const GadkotMohima = () => {
 
   const renderItem = ({item, index}) => {
     return (
-      <LinearGradient
-        style={styles.listView}
-        colors={[colorThree, colorNine]}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 1}}>
-        <View style={styles.itemContainer}>
-          <Text style={styles.title}>{Texts.mohimPeriod} </Text>
-          <Text style={styles.description}>{item?.year}</Text>
-        </View>
-        <View style={styles.itemContainer}>
-          <Text style={styles.title}>{Texts.mohimPath} </Text>
-          <Text style={styles.description}>{item?.mohim}</Text>
-        </View>
-      </LinearGradient>
+      <>
+        <LinearGradient
+          style={styles.listView}
+          colors={[colorThree, colorNine]}
+          start={{x: 0, y: 0}}
+          end={{x: 1, y: 1}}>
+          <View style={styles.itemContainer}>
+            <Text style={styles.title}>{Texts.mohimPeriod} </Text>
+            <Text style={styles.description}>{item?.year}</Text>
+          </View>
+          <View style={styles.itemContainer}>
+            <Text style={styles.title}>{Texts.mohimPath} </Text>
+            <Text style={styles.description}>{item?.mohim}</Text>
+          </View>
+        </LinearGradient>
+        {isInlineAdSlot(index, gadkotData.length, GADKOT_AD_INTERVAL) ? (
+          <InlineBannerAd style={styles.inlineAd} />
+        ) : null}
+      </>
     );
   };
 
@@ -65,6 +74,9 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(12),
     padding: moderateScale(12),
     elevation: 3,
+  },
+  inlineAd: {
+    marginTop: 0,
   },
   itemContainer: {
     flexDirection: 'row',

@@ -17,6 +17,7 @@ import {colorNine, colorThree, textColor} from '../../utils/constants/color';
 import {moderateScale} from '../../utils/constants/Metrics';
 import {Headers} from '../../utils/constants/TextConstants';
 import CustomBannerAd from '../common/CustomBannerAd';
+import InlineBannerAd, {isInlineAdSlot} from '../common/InlineBannerAd';
 import ListHeader from '../common/ListHeader';
 
 const PadyaList = () => {
@@ -41,31 +42,34 @@ const PadyaList = () => {
     }
   };
 
-  const renderItem = ({item}) => {
+  const renderItem = ({item, index}) => {
     return (
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Poem', {poem: item})}>
-        <LinearGradient
-          style={styles.listView}
-          colors={[colorThree, colorNine]}
-          start={{x: 0, y: 0}}
-          end={{x: 1, y: 0}}>
-          <Text style={styles.listText}>{item?.title}</Text>
-          {item?.audio ? (
-            <Icon
-              name={'play-circle-sharp'}
-              size={moderateScale(36)}
-              color={textColor}
-              onPress={() =>
-                navigation.navigate('Audio', {
-                  url: item?.audio,
-                  title: item?.title,
-                })
-              }
-            />
-          ) : null}
-        </LinearGradient>
-      </TouchableOpacity>
+      <>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Poem', {poem: item})}>
+          <LinearGradient
+            style={styles.listView}
+            colors={[colorThree, colorNine]}
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 0}}>
+            <Text style={styles.listText}>{item?.title}</Text>
+            {item?.audio ? (
+              <Icon
+                name={'play-circle-sharp'}
+                size={moderateScale(36)}
+                color={textColor}
+                onPress={() =>
+                  navigation.navigate('Audio', {
+                    url: item?.audio,
+                    title: item?.title,
+                  })
+                }
+              />
+            ) : null}
+          </LinearGradient>
+        </TouchableOpacity>
+        {isInlineAdSlot(index, data.length) ? <InlineBannerAd /> : null}
+      </>
     );
   };
 
